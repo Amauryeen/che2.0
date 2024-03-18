@@ -10,11 +10,23 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
+// Enums
+
+enum Role {
+  GUEST
+  MEMBER
+  ADMINISTRATOR
+  OPERATOR
+}
+
+// Models
+
 model User {
-  id            String    @default(cuid()) @id
+  id            Int       @default(autoincrement()) @id
   email         String    @unique
-  first_name    String?
-  last_name     String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  firstName     String
+  lastName      String
+  role          Role      @default(GUEST)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
 }
