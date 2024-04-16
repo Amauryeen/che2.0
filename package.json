@@ -1,6 +1,6 @@
 {
-  "name": "che2",
-  "version": "0.1.0",
+  "name": "che2.0",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
