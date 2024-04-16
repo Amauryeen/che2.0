@@ -7,9 +7,9 @@ const prisma = new PrismaClient()
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     AzureAD({
-        clientId: process.env.AZURE_AD_CLIENT_ID,
-        clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
-        tenantId: process.env.AZURE_AD_TENANT_ID,
+        clientId: process.env.AUTH_AZURE_AD_CLIENT,
+        clientSecret: process.env.AUTH_AZURE_AD_SECRET,
+        tenantId: process.env.AUTH_AZURE_AD_TENANT,
   })],
   callbacks: {
     async signIn({ user }) {
