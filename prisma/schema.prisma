@@ -22,7 +22,7 @@ enum Role {
 // Models
 
 model User {
-  id            Int       @default(autoincrement()) @id
+  id            String    @id @unique @default(cuid())
   email         String    @unique
   firstName     String
   lastName      String

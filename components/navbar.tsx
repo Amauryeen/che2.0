@@ -11,7 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
+import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -49,7 +49,7 @@ export default function ResponsiveDrawer(props: Props) {
         <ListItem key="Accueil" disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <MailIcon />
+              <HomeIcon />
             </ListItemIcon>
             <ListItemText primary="Accueil" />
           </ListItemButton>
@@ -79,7 +79,7 @@ export default function ResponsiveDrawer(props: Props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            CHE2
+            CHE2.0
           </Typography>
         </Toolbar>
       </AppBar>
