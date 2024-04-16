@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     AzureAD({
-        clientId: process.env.AUTH_AZURE_AD_CLIENT,
+        clientId: process.env.AUTH_AZURE_AD_ID,
         clientSecret: process.env.AUTH_AZURE_AD_SECRET,
         tenantId: process.env.AUTH_AZURE_AD_TENANT,
   })],
@@ -19,12 +19,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         where: {
           email: user.email
         }
-      })
+      });
 
       if ((user?.email?.endsWith('@ephec.be') || user?.email?.endsWith('@students.ephec.be')) && dbUser) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     }
   }
