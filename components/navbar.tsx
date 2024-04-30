@@ -15,8 +15,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
 
-const drawerWidth = 200;
+const drawerWidth = 175;
 
 interface Props {
   children: React.ReactNode;
@@ -47,12 +48,16 @@ export default function ResponsiveDrawer(props: Props) {
       <Divider />
       <List>
         <ListItem key="Accueil" disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Accueil" />
-          </ListItemButton>
+          <Box sx={{width:'100%'}}>
+            <Link href="/">
+              <ListItemButton>
+                  <ListItemIcon>
+                    <HomeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Accueil" />
+              </ListItemButton>
+            </Link>
+          </Box>
         </ListItem>
       </List>
     </div>
