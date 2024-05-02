@@ -26,7 +26,7 @@ export default async function RootLayout({
       <html lang="fr">
         <body>
           <AppRouterCacheProvider>
-            {session ? <Navbar>{children}</Navbar> : <Unauthenticated />}
+            {session?.user ? <Navbar>{children}</Navbar> : <Unauthenticated />}
           </AppRouterCacheProvider>
         </body>
       </html>
