@@ -13,14 +13,17 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 
-const drawerWidth = 175;
+const drawerWidth = 230;
 
 interface Props {
   children: React.ReactNode;
+  email: string;
+  name: string;
 }
 
 export default function ResponsiveDrawer(props: Props) {
@@ -47,7 +50,7 @@ export default function ResponsiveDrawer(props: Props) {
       <Toolbar />
       <Divider />
       <List>
-        <ListItem key="Accueil" disablePadding>
+        <ListItem disablePadding>
           <Box sx={{width:'100%'}}>
             <Link href="/">
               <ListItemButton>
@@ -55,6 +58,19 @@ export default function ResponsiveDrawer(props: Props) {
                     <HomeIcon />
                   </ListItemIcon>
                   <ListItemText primary="Accueil" />
+              </ListItemButton>
+            </Link>
+          </Box>
+        </ListItem>
+        <Divider />
+        <ListItem disablePadding>
+          <Box sx={{width:'100%'}}>
+            <Link href="/api/auth/signout">
+              <ListItemButton>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Déconnexion" />
               </ListItemButton>
             </Link>
           </Box>
@@ -86,6 +102,14 @@ export default function ResponsiveDrawer(props: Props) {
           <Typography variant="h6" noWrap component="div">
             CHE2.0
           </Typography>
+          <Box sx={{ flexGrow: 1, textAlign: 'right' }}>
+            <Typography variant="body2" noWrap component="div">
+              {props.name}
+            </Typography>
+            <Typography variant="caption" noWrap component="div">
+              {props.email}
+            </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box

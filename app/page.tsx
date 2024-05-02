@@ -5,7 +5,7 @@ export default async function Page() {
 
     return (
         <div>
-            <p>Bonjour <b>{session?.user?.name}</b>!</p>
+            <p>Bonjour <b>{session?.user?.email}</b>!</p>
         </div>
     );
 }
