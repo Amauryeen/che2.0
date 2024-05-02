@@ -14,6 +14,8 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
@@ -46,10 +48,19 @@ export default function ResponsiveDrawer(props: Props) {
   };
 
   const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'start', padding: '0.1rem 1.5rem' }}>
+        <Box
+          component="img"
+          src="/favicon.ico"
+          sx={{ width: '30%', height: 'auto'}}
+        />
+        <Typography variant="h6" noWrap component="div" sx={{ textAlign: 'right', flexGrow: 1 }}>
+          CHE2.0
+        </Typography>
+      </Box>
       <List>
+        <Divider />
         <ListItem disablePadding>
           <Box sx={{width:'100%'}}>
             <Link href="/">
@@ -58,6 +69,31 @@ export default function ResponsiveDrawer(props: Props) {
                     <HomeIcon />
                   </ListItemIcon>
                   <ListItemText primary="Accueil" />
+              </ListItemButton>
+            </Link>
+          </Box>
+        </ListItem>
+        <Divider />
+        <ListItem disablePadding>
+          <Box sx={{width:'100%'}}>
+            <Link href="/users">
+              <ListItemButton>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Utilisateurs" />
+              </ListItemButton>
+            </Link>
+          </Box>
+        </ListItem>
+        <ListItem disablePadding>
+          <Box sx={{width:'100%'}}>
+            <Link href="/settings">
+              <ListItemButton>
+                  <ListItemIcon>
+                    <SettingsIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Réglages" />
               </ListItemButton>
             </Link>
           </Box>
@@ -76,6 +112,15 @@ export default function ResponsiveDrawer(props: Props) {
           </Box>
         </ListItem>
       </List>
+      <Box sx={{ flexGrow: 1 }} />
+    <Box sx={{ padding: '1rem' }}>
+      <Typography variant="body2" noWrap component="div">
+        {props.name}
+      </Typography>
+      <Typography variant="body2" noWrap component="div">
+        {props.email}
+      </Typography>
+    </Box>
     </div>
   );
 
@@ -99,9 +144,6 @@ export default function ResponsiveDrawer(props: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            CHE2.0
-          </Typography>
           <Box sx={{ flexGrow: 1, textAlign: 'right' }}>
             <Typography variant="body2" noWrap component="div">
               {props.name}
