@@ -1,4 +1,4 @@
-export default async function Page() {
+export default async function HomePage() {
   return (
     <div>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lectus odio,

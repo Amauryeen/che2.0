@@ -12,9 +12,10 @@ datasource db {
 
 // Enums
 
-enum Role {
+enum RoleType {
   GUEST
   MEMBER
+  MEMBER_FULL
   ADMINISTRATOR
   OPERATOR
 }
@@ -22,11 +23,22 @@ enum Role {
 // Models
 
 model User {
-  id            String    @id @unique @default(cuid())
-  email         String    @unique
-  firstName     String
-  lastName      String
-  role          Role      @default(GUEST)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
+  id                Int                 @id @default(autoincrement())
+  isActive          Boolean             @default(true)
+  email             String              @unique
+  firstName         String
+  lastName          String
+  roles             UserRole[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @default(now()) @updatedAt
+}
+
+model UserRole {
+  userId            Int
+  user              User                @relation(fields: [userId], references: [id])
+  role              RoleType
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @default(now()) @updatedAt
+
+  @@id([userId, role])
 }

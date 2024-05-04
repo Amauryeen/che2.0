@@ -19,6 +19,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const drawerWidth = 230;
 
@@ -57,11 +58,7 @@ export default function ResponsiveDrawer(props: Props) {
           padding: '0.1rem 1.5rem',
         }}
       >
-        <Box
-          component="img"
-          src="/favicon.ico"
-          sx={{ width: '28.8%', height: 'auto' }}
-        />
+        <Image src="/favicon.ico" alt="Logo CHE2" width={52} height={52} />
         <Typography
           variant="h6"
           noWrap
@@ -137,7 +134,7 @@ export default function ResponsiveDrawer(props: Props) {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -169,7 +166,6 @@ export default function ResponsiveDrawer(props: Props) {
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
       >
         <Drawer
           variant="temporary"
@@ -207,11 +203,9 @@ export default function ResponsiveDrawer(props: Props) {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: 2,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          wordWrap: 'break-word',
-          overflowWrap: 'break-word',
-          wordBreak: 'break-all',
+          ml: { sm: `${drawerWidth}px` },
         }}
       >
         <Toolbar />
