@@ -1,8 +1,7 @@
 import NextAuth from "next-auth"
 import AzureAD from "next-auth/providers/azure-ad"
-import { PrismaClient } from "@prisma/client"
+import { getUserByEmail } from "@/services/users"
 
-const prisma = new PrismaClient()
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -15,13 +14,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ user }) {
       if (!user?.email) return false;
 
-      const dbUser = await prisma.user.findUnique({
-        where: {
-          email: user.email
-        }
-      });
+      const existsInDatabase = await getUserByEmail(user.email);
 
-      if ((user?.email?.endsWith('@ephec.be') || user?.email?.endsWith('@students.ephec.be')) && dbUser) {
+      if ((user?.email?.endsWith('@ephec.be') || user?.email?.endsWith('@students.ephec.be')) && existsInDatabase) {
         return true;
       } else {
         return false;

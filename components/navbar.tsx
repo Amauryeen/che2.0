@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -49,78 +49,90 @@ export default function ResponsiveDrawer(props: Props) {
 
   const drawer = (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'start', padding: '0.1rem 1.5rem' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'start',
+          padding: '0.1rem 1.5rem',
+        }}
+      >
         <Box
           component="img"
           src="/favicon.ico"
-          sx={{ width: '30%', height: 'auto'}}
+          sx={{ width: '28.8%', height: 'auto' }}
         />
-        <Typography variant="h6" noWrap component="div" sx={{ textAlign: 'right', flexGrow: 1 }}>
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{ textAlign: 'right', flexGrow: 1 }}
+        >
           CHE2.0
         </Typography>
       </Box>
       <List>
         <Divider />
         <ListItem disablePadding>
-          <Box sx={{width:'100%'}}>
+          <Box sx={{ width: '100%' }}>
             <Link href="/">
               <ListItemButton>
-                  <ListItemIcon>
-                    <HomeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Accueil" />
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Accueil" />
               </ListItemButton>
             </Link>
           </Box>
         </ListItem>
         <Divider />
         <ListItem disablePadding>
-          <Box sx={{width:'100%'}}>
+          <Box sx={{ width: '100%' }}>
             <Link href="/users">
               <ListItemButton>
-                  <ListItemIcon>
-                    <PersonIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Utilisateurs" />
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary="Utilisateurs" />
               </ListItemButton>
             </Link>
           </Box>
         </ListItem>
         <ListItem disablePadding>
-          <Box sx={{width:'100%'}}>
+          <Box sx={{ width: '100%' }}>
             <Link href="/settings">
               <ListItemButton>
-                  <ListItemIcon>
-                    <SettingsIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Réglages" />
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Réglages" />
               </ListItemButton>
             </Link>
           </Box>
         </ListItem>
         <Divider />
         <ListItem disablePadding>
-          <Box sx={{width:'100%'}}>
+          <Box sx={{ width: '100%' }}>
             <Link href="/api/auth/signout">
               <ListItemButton>
-                  <ListItemIcon>
-                    <LogoutIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Déconnexion" />
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Déconnexion" />
               </ListItemButton>
             </Link>
           </Box>
         </ListItem>
       </List>
       <Box sx={{ flexGrow: 1 }} />
-    <Box sx={{ padding: '1rem' }}>
-      <Typography variant="body2" noWrap component="div">
-        {props.name}
-      </Typography>
-      <Typography variant="body2" noWrap component="div">
-        {props.email}
-      </Typography>
-    </Box>
+      {/* <Box sx={{ padding: '1rem' }}>
+        <Typography variant="body2" noWrap component="div">
+          {props.name}
+        </Typography>
+        <Typography variant="body2" noWrap component="div">
+          {props.email}
+        </Typography>
+      </Box> */}
     </div>
   );
 
@@ -169,7 +181,10 @@ export default function ResponsiveDrawer(props: Props) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+            },
           }}
         >
           {drawer}
@@ -178,7 +193,10 @@ export default function ResponsiveDrawer(props: Props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+            },
           }}
           open
         >
@@ -187,7 +205,11 @@ export default function ResponsiveDrawer(props: Props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+        }}
       >
         <Toolbar />
         {props.children}
