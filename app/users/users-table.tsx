@@ -13,18 +13,9 @@ import { Chip } from '@mui/material';
 export default function UsersTable(props: { users: User[] }) {
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 75, flex: 1 },
-    {
-      field: 'isActive',
-      headerName: 'Statut',
-      minWidth: 150,
-      flex: 1,
-      renderCell: (params: GridRenderCellParams) =>
-        params.row.isActive ? (
-          <Chip icon={<CheckIcon />} label="Actif" color="success" />
-        ) : (
-          <Chip icon={<CloseIcon />} label="Inactif" color="error" />
-        ),
-    },
+    { field: 'email', headerName: 'E-mail', minWidth: 300, flex: 1 },
+    { field: 'lastName', headerName: 'Nom', minWidth: 200, flex: 1 },
+    { field: 'firstName', headerName: 'Prénom', minWidth: 200, flex: 1 },
     {
       field: 'roles',
       headerName: 'Rôles',
@@ -43,13 +34,33 @@ export default function UsersTable(props: { users: User[] }) {
             key={role.userId}
             label={roleLabels[role.role]}
             sx={{ mr: '5px' }}
+            variant="outlined"
           />
         ));
       },
     },
-    { field: 'email', headerName: 'E-mail', minWidth: 300, flex: 1 },
-    { field: 'lastName', headerName: 'Nom', minWidth: 200, flex: 1 },
-    { field: 'firstName', headerName: 'Prénom', minWidth: 200, flex: 1 },
+    {
+      field: 'isActive',
+      headerName: 'Statut',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (params: GridRenderCellParams) =>
+        params.row.isActive ? (
+          <Chip
+            icon={<CheckIcon />}
+            label="Actif"
+            color="success"
+            variant="outlined"
+          />
+        ) : (
+          <Chip
+            icon={<CloseIcon />}
+            label="Inactif"
+            color="error"
+            variant="outlined"
+          />
+        ),
+    },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -89,16 +100,17 @@ export default function UsersTable(props: { users: User[] }) {
       }}
       pageSizeOptions={[5, 10, 20]}
       initialState={{
-        columns: {
-          columnVisibilityModel: {
-            id: false,
-            email: false,
-          },
-        },
         pagination: {
           paginationModel: { page: 0, pageSize: 10 },
         },
+        sorting: {
+          sortModel: [
+            { field: 'isActive', sort: 'desc' },
+            { field: 'id', sort: 'asc' },
+          ],
+        },
       }}
+      disableRowSelectionOnClick
     />
   );
 }
