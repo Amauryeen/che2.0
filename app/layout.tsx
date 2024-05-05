@@ -3,7 +3,7 @@ import './globals.css';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import Navbar from '@/components/navbar';
 import { auth } from '@/auth';
-import Unauthenticated from '@/components/unauthenticated';
+import Unauthenticated from '@/components/errors/unauthenticated';
 import { Metadata } from 'next';
 import theme from '@/app/theme';
 import { ThemeProvider } from '@mui/material';

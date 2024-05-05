@@ -68,8 +68,8 @@ export default function UsersTable(props: { users: User[] }) {
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
-          <Link href={`/users/${params.row.id}`}>
-            <IconButton>
+          <Link href={`#`}>
+            <IconButton disabled>
               <VisibilityIcon />
             </IconButton>
           </Link>
@@ -78,8 +78,8 @@ export default function UsersTable(props: { users: User[] }) {
               <EditIcon />
             </IconButton>
           </Link>
-          <Link href={`/users/${params.row.id}/delete`}>
-            <IconButton>
+          <Link href={`#`}>
+            <IconButton disabled>
               <DeleteIcon />
             </IconButton>
           </Link>
@@ -104,10 +104,7 @@ export default function UsersTable(props: { users: User[] }) {
           paginationModel: { page: 0, pageSize: 10 },
         },
         sorting: {
-          sortModel: [
-            { field: 'isActive', sort: 'desc' },
-            { field: 'id', sort: 'asc' },
-          ],
+          sortModel: [{ field: 'isActive', sort: 'desc' }],
         },
       }}
       disableRowSelectionOnClick
