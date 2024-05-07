@@ -7,13 +7,13 @@
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
-  // "features": {},
+  "features": { "ghcr.io/devcontainers-contrib/features/vercel-cli:1": {} },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // This can be used to network with other containers or with the host.
   "forwardPorts": [3000, 5432],
 
-  "portsAttributes": {"3000": {"onAutoForward": "openBrowserOnce"}},
+  "portsAttributes": { "3000": { "onAutoForward": "openBrowserOnce" } },
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "npm i && npx prisma migrate dev --name initiate && npx prisma db seed"
