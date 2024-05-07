@@ -32,7 +32,7 @@ export default function Unauthenticated() {
           textAlign: { xs: 'center', sm: 'left' },
         }}
       >
-        Vous devez être connecté pour accéder à cette page.
+        Vous devez être connecté pour accéder à cette ressource.
       </Typography>
 
       <form

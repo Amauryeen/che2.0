@@ -1,9 +1,8 @@
 'use client';
 import { DataGrid, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
-import { User, UserRole } from '@prisma/client';
+import { User } from '@prisma/client';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
@@ -13,26 +12,19 @@ import { Chip } from '@mui/material';
 export default function UsersTable(props: { users: User[] }) {
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 75, flex: 1 },
-    { field: 'email', headerName: 'E-mail', minWidth: 300, flex: 1 },
     { field: 'lastName', headerName: 'Nom', minWidth: 200, flex: 1 },
     { field: 'firstName', headerName: 'Prénom', minWidth: 200, flex: 1 },
+    { field: 'email', headerName: 'Email', minWidth: 300, flex: 1 },
     {
       field: 'roles',
       headerName: 'Rôles',
       minWidth: 400,
       flex: 1,
       renderCell: (params: GridRenderCellParams) => {
-        const roleLabels = {
-          OPERATOR: 'Opérateur',
-          ADMINISTRATOR: 'Administrateur',
-          MEMBER_FULL: 'Membre Effectif',
-          MEMBER: 'Membre Adhérant',
-          GUEST: 'Invité',
-        };
-        return params.row.roles.map((role: UserRole) => (
+        return params.row.roles.map((role: any) => (
           <Chip
             key={role.userId}
-            label={roleLabels[role.role]}
+            label={role.role.name}
             sx={{ mr: '5px' }}
             variant="outlined"
           />
@@ -40,12 +32,12 @@ export default function UsersTable(props: { users: User[] }) {
       },
     },
     {
-      field: 'isActive',
+      field: 'status',
       headerName: 'Statut',
       minWidth: 150,
       flex: 1,
       renderCell: (params: GridRenderCellParams) =>
-        params.row.isActive ? (
+        params.row.status === 'active' ? (
           <Chip
             icon={<CheckIcon />}
             label="Actif"
@@ -78,11 +70,6 @@ export default function UsersTable(props: { users: User[] }) {
               <EditIcon />
             </IconButton>
           </Link>
-          <Link href={`#`}>
-            <IconButton disabled>
-              <DeleteIcon />
-            </IconButton>
-          </Link>
         </>
       ),
     },
@@ -103,8 +90,10 @@ export default function UsersTable(props: { users: User[] }) {
         pagination: {
           paginationModel: { page: 0, pageSize: 10 },
         },
-        sorting: {
-          sortModel: [{ field: 'isActive', sort: 'desc' }],
+        columns: {
+          columnVisibilityModel: {
+            id: false,
+          },
         },
       }}
       disableRowSelectionOnClick

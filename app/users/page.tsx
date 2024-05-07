@@ -1,11 +1,17 @@
+'use client';
 import { Box, Button, Card, Typography } from '@mui/material';
 import UsersTable from './users-table';
 import Link from 'next/link';
 import { getUsers } from '@/services/users';
 import AddIcon from '@mui/icons-material/Add';
+import { useEffect, useState } from 'react';
+import { User } from '@prisma/client';
 
-export default async function UsersPage() {
-  const users = await getUsers();
+export default function UsersPage() {
+  const [users, setUsers] = useState<User[]>([]);
+  useEffect(() => {
+    getUsers().then((users: User[]) => setUsers(users));
+  }, []);
 
   return (
     <>

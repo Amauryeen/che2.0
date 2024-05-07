@@ -12,33 +12,38 @@ datasource db {
 
 // Enums
 
-enum RoleType {
-  GUEST
-  MEMBER
-  MEMBER_FULL
-  ADMINISTRATOR
-  OPERATOR
+enum UserStatus {
+  active
+  inactive
 }
 
 // Models
 
 model User {
-  id                Int                 @id @default(autoincrement())
-  isActive          Boolean             @default(true)
-  email             String              @unique
-  firstName         String
-  lastName          String
-  roles             UserRole[]
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @default(now()) @updatedAt
+  id        Int        @id @default(autoincrement())
+  status    UserStatus @default(active)
+  email     String     @unique
+  firstName String
+  lastName  String
+  roles     UserRole[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+}
+
+model Role {
+  id        Int        @id @default(autoincrement())
+  name      String
+  userRole  UserRole[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
 }
 
 model UserRole {
-  userId            Int
-  user              User                @relation(fields: [userId], references: [id])
-  role              RoleType
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @default(now()) @updatedAt
-
-  @@id([userId, role])
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  roleId    Int
+  role      Role     @relation(fields: [roleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
