@@ -16,7 +16,7 @@
   "portsAttributes": {"3000": {"onAutoForward": "openBrowserOnce"}},
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "rm -rf ./prisma/migrations && npx prisma migrate dev initiate && npx prisma db seed"
+  "postCreateCommand": ["npm i", "npx prisma migrate dev initiate", "npx prisma db seed"]
 
   // Configure tool-specific properties.
   // "customizations": {},
