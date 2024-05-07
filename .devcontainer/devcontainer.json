@@ -13,6 +13,8 @@
   // This can be used to network with other containers or with the host.
   "forwardPorts": [3000, 5432],
 
+  "portsAttributes": {"3000": {"onAutoForward": "openBrowserOnce"}},
+
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "rm -rf ./prisma/migrations && npx prisma migrate dev initiate && npx prisma db seed"
 
