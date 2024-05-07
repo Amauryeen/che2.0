@@ -7,6 +7,7 @@ import Unauthenticated from '@/components/errors/unauthenticated';
 import { Metadata } from 'next';
 import theme from '@/app/theme';
 import { ThemeProvider } from '@mui/material';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'CHE2.0',
@@ -25,6 +26,7 @@ export default async function RootLayout({
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <html lang="fr">
+        <Analytics />
         <body>
           <AppRouterCacheProvider>
             {session?.user?.email && session.user.name ? (
