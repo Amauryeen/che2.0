@@ -1,11 +1,13 @@
 import AzureAD from 'next-auth/providers/azure-ad';
 import { getUserByEmail } from '@/services/users';
 import NextAuth, { type DefaultSession } from 'next-auth';
-import { Role, User } from '@prisma/client';
+import { Role, User, UserRole } from '@prisma/client';
 
 declare module 'next-auth' {
   interface Session {
-    user: User & { roles: Array<Role> } & DefaultSession['user'];
+    user: User & {
+      roles: Array<UserRole> & { role: Role };
+    } & DefaultSession['user'];
   }
 }
 
