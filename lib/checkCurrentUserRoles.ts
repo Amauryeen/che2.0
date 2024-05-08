@@ -1,6 +1,7 @@
-import { getCurrentUser } from '@/services/users';
+'use server';
+import { auth } from '@/auth';
 
 export default async function checkCurrentUserRoles(roles: string[]) {
-  const user = await getCurrentUser();
-  return user?.roles.some(role => roles.includes(role.role.name));
+  const session = await auth();
+  return session?.user.roles.some(role => roles.includes(role.name));
 }

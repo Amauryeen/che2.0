@@ -17,9 +17,9 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const session = await auth();
 
   return (
@@ -29,8 +29,11 @@ export default async function RootLayout({
         <Analytics />
         <body>
           <AppRouterCacheProvider>
-            {session?.user?.email && session.user.name ? (
-              <Navbar name={session.user.name} email={session.user.email}>
+            {session?.user?.email ? (
+              <Navbar
+                name={session.user.lastName + ' ' + session.user.firstName}
+                email={session.user.email}
+              >
                 {children}
               </Navbar>
             ) : (

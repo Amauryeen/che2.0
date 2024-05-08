@@ -1,6 +1,13 @@
-import NextAuth from 'next-auth';
 import AzureAD from 'next-auth/providers/azure-ad';
 import { getUserByEmail } from '@/services/users';
+import NextAuth, { type DefaultSession } from 'next-auth';
+import { Role, User } from '@prisma/client';
+
+declare module 'next-auth' {
+  interface Session {
+    user: User & { roles: Array<Role> } & DefaultSession['user'];
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -14,17 +21,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ user }) {
       if (!user?.email) return false;
 
-      const existsInDatabase = await getUserByEmail(user.email);
+      const databaseUser = await getUserByEmail(user.email);
 
       if (
         (user?.email?.endsWith('@ephec.be') ||
           user?.email?.endsWith('@students.ephec.be')) &&
-        existsInDatabase
+        databaseUser
       ) {
         return true;
       } else {
         return false;
       }
+    },
+    async jwt({ token }) {
+      if (!token?.email) throw new Error('No email found in token');
+      if (!token.user) {
+        const databaseUser = await getUserByEmail(token.email);
+        token.user = databaseUser;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user = token.user as any;
+      return session;
     },
   },
 });
