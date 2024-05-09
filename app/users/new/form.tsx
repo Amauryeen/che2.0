@@ -61,14 +61,15 @@ export default function Form(props: { roles: Role[] }) {
     } else {
       formValues.status = 'inactive';
     }
-    createUser(formValues)
-      .then(() => {
+
+    toast.promise(createUser(formValues), {
+      loading: 'Création en cours...',
+      success: () => {
         router.push('/users');
-        toast.success("L'utilisateur a été créé avec succès.");
-      })
-      .catch(reason => {
-        toast.error(reason.message);
-      });
+        return <>L&apos;utilisateur a été créé avec succès.</>;
+      },
+      error: <>L&apos;utilisateur n&apos;a pas pu être créé.</>,
+    });
   }
 
   const router = useRouter();

@@ -42,8 +42,7 @@ export default async function RootLayout({
             )}
             <Toaster
               position="bottom-right"
-              reverseOrder={false}
-              toastOptions={{ duration: 4000 }}
+              toastOptions={{ duration: 5000 }}
             />
           </AppRouterCacheProvider>
         </body>
