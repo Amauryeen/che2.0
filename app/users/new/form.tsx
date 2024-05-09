@@ -16,9 +16,10 @@ import {
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 import { Role } from '@prisma/client';
 import { createUser } from '@/services/users';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const schema = yup.object({
   status: yup.boolean(),
@@ -60,8 +61,14 @@ export default function Form(props: { roles: Role[] }) {
     } else {
       formValues.status = 'inactive';
     }
-    createUser(formValues);
-    router.push('/users');
+    createUser(formValues)
+      .then(() => {
+        router.push('/users');
+        toast.success("L'utilisateur a été créé avec succès.");
+      })
+      .catch(reason => {
+        toast.error(reason.message);
+      });
   }
 
   const router = useRouter();

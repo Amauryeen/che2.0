@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import theme from '@/app/theme';
 import { ThemeProvider } from '@mui/material';
 import { Analytics } from '@vercel/analytics/react';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: 'CHE2.0',
@@ -39,6 +40,11 @@ export default async function RootLayout({
             ) : (
               <Unauthenticated />
             )}
+            <Toaster
+              position="bottom-right"
+              reverseOrder={false}
+              toastOptions={{ duration: 4000 }}
+            />
           </AppRouterCacheProvider>
         </body>
       </html>
