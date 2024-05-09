@@ -1,35 +1,23 @@
-'use client';
+'use server';
 import { getSession } from '@/services/auth';
-import { Session } from 'next-auth';
-import { useEffect, useState } from 'react';
 import Unauthorized from './errors/unauthorized';
 
-export default function ProtectedRoute({
+export default async function ProtectedRoute({
   children,
   authorizedRoles,
 }: {
   children: React.ReactNode;
   authorizedRoles: string[];
 }) {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getSession().then((response: Session | null) => {
-      response ? setSession(response) : null;
-      setLoading(false);
-    });
-  }, []);
+  const session = await getSession();
 
   return (
     <>
-      {loading ? (
-        <p>Chargement...</p>
-      ) : session?.user.roles.some((role: any) =>
-          authorizedRoles.some(
-            authorizedRole => authorizedRole == role.role.name,
-          ),
-        ) ? (
+      {session?.user.roles.some((role: any) =>
+        authorizedRoles.some(
+          authorizedRole => authorizedRole == role.role.name,
+        ),
+      ) ? (
         children
       ) : (
         <Unauthorized />

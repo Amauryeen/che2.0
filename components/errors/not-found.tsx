@@ -1,6 +1,7 @@
+'use server';
 import { Container, Typography } from '@mui/material';
 
-export default function NotFound() {
+export default async function NotFound() {
   return (
     <Container
       sx={{

@@ -1,7 +1,8 @@
+'use server';
 import { Button, Container, Typography } from '@mui/material';
 import { signIn } from '@/auth';
 
-export default function Unauthenticated() {
+export default async function Unauthenticated() {
   return (
     <Container
       sx={{

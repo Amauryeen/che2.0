@@ -1,6 +1,7 @@
+'use server';
 import { Container, Typography } from '@mui/material';
 
-export default function Unauthorized() {
+export default async function Unauthorized() {
   return (
     <Container
       sx={{

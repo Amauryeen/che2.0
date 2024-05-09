@@ -1,5 +1,6 @@
+'use server';
 import NotFound from '@/components/errors/not-found';
 
-export default function NotFoundPage() {
+export default async function NotFoundPage() {
   return <NotFound />;
 }
