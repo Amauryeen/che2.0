@@ -15,14 +15,18 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import { Role, User } from '@prisma/client';
-import { createUser } from '@/services/users';
+import { updateUser } from '@/services/users';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-export default function Form(props: { roles: Role[]; users: User[] }) {
+export default function Form(props: {
+  roles: Role[];
+  users: User[];
+  user: User & { roles: Role[] };
+}) {
   const router = useRouter();
   const schema = yup.object({
-    status: yup.string().required('Veuillez renseigner ce champ'),
+    status: yup.string(),
     firstName: yup.string().required('Veuillez renseigner ce champ'),
     lastName: yup.string().required('Veuillez renseigner ce champ'),
     email: yup
@@ -43,7 +47,9 @@ export default function Form(props: { roles: Role[]; users: User[] }) {
         'is-unique-email',
         'Un compte avec cet e-mail existe déjà',
         value => {
-          return !props.users.some(user => user.email === value);
+          return !props.users.some(
+            user => user.email === value && user.email !== props.user.email,
+          );
         },
       )
       .test(
@@ -59,11 +65,11 @@ export default function Form(props: { roles: Role[]; users: User[] }) {
 
   const { register, handleSubmit, formState, control } = useForm({
     defaultValues: {
-      status: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      roles: [],
+      status: props.user.status,
+      firstName: props.user.firstName,
+      lastName: props.user.lastName,
+      email: props.user.email,
+      roles: props.user.roles.map((role: any) => role.role.name),
     },
     resolver: yupResolver(schema),
   });
@@ -81,13 +87,13 @@ export default function Form(props: { roles: Role[]; users: User[] }) {
       )
       .join(' ');
 
-    toast.promise(createUser(formValues), {
-      loading: 'Création en cours...',
+    toast.promise(updateUser(props.user.id, formValues), {
+      loading: 'Modification en cours...',
       success: () => {
         router.push('/users');
-        return <>L&apos;utilisateur a été créé avec succès.</>;
+        return <>L&apos;utilisateur a été mis à jour avec succès.</>;
       },
-      error: <>L&apos;utilisateur n&apos;a pas pu être créé.</>,
+      error: <>L&apos;utilisateur n&apos;a pas pu être mis à jour.</>,
     });
   }
 

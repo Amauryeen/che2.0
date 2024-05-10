@@ -65,3 +65,35 @@ export async function createUser(data: {
     })),
   });
 }
+
+export async function updateUser(
+  id: number,
+  data: {
+    status: UserStatus;
+    email: string;
+    firstName: string;
+    lastName: string;
+    roles: string[];
+  },
+) {
+  await prisma.user.update({
+    where: { id },
+    data: {
+      status: data.status,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+    },
+  });
+
+  const roles = await getRoles();
+
+  await prisma.userRole.deleteMany({ where: { userId: id } });
+
+  await prisma.userRole.createMany({
+    data: data.roles.map(role => ({
+      userId: id,
+      roleId: roles.find(r => r.name === role)?.id ?? 0,
+    })),
+  });
+}
