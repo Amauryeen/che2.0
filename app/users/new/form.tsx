@@ -205,7 +205,7 @@ export default function Form(props: { roles: Role[]; users: User[] }) {
         </Grid>
         <Grid item xs={12}>
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Soumettre
+            Créer
           </Button>
         </Grid>
       </Grid>

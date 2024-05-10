@@ -211,7 +211,7 @@ export default function Form(props: {
         </Grid>
         <Grid item xs={12}>
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Soumettre
+            Sauvegarder
           </Button>
         </Grid>
       </Grid>
