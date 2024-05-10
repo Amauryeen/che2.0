@@ -1,7 +1,7 @@
 'use server';
 import { Container, Typography } from '@mui/material';
 
-export default async function Unauthorized() {
+export default async function Unauthorized(props: { roles?: string[] }) {
   return (
     <Container
       sx={{
@@ -32,7 +32,14 @@ export default async function Unauthorized() {
           textAlign: { xs: 'center', sm: 'left' },
         }}
       >
-        Vous n&apos;êtes pas autorisé à accéder à cette ressource.
+        {props.roles ? (
+          <>
+            Vous devez être <b>{props.roles.join(' ou ')}</b> pour accéder à
+            cette ressource.
+          </>
+        ) : (
+          <>Vous n&apos;êtes pas autorisé à accéder à cette ressource</>
+        )}
       </Typography>
     </Container>
   );

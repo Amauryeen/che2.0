@@ -25,11 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       const databaseUser = await getUserByEmail(user.email);
 
-      if (
-        (user?.email?.endsWith('@ephec.be') ||
-          user?.email?.endsWith('@students.ephec.be')) &&
-        databaseUser
-      ) {
+      if (databaseUser && databaseUser.status === 'active') {
         return true;
       } else {
         return false;

@@ -20,7 +20,7 @@ export default async function ProtectedRoute({
       ) ? (
         children
       ) : (
-        <Unauthorized />
+        <Unauthorized roles={authorizedRoles} />
       )}
     </>
   );
