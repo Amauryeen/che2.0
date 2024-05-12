@@ -32,7 +32,7 @@ export default async function NotFound() {
           textAlign: { xs: 'center', sm: 'left' },
         }}
       >
-        La page que vous essayez d&apos;atteindre n&apos;existe pas.
+        La ressource que vous essayez d&apos;atteindre n&apos;existe pas.
       </Typography>
     </Container>
   );

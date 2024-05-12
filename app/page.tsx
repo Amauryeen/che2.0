@@ -2,6 +2,10 @@
 import { auth } from '@/auth';
 
 export default async function HomePage() {
-  const user = await auth();
-  return <p>{JSON.stringify(user)}</p>;
+  const session = await auth();
+  return (
+    <p>
+      Bienvenue <b>{session?.user.firstName}</b> !
+    </p>
+  );
 }

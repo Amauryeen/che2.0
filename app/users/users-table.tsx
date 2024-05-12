@@ -14,7 +14,7 @@ export default function UsersTable(props: { users: User[] }) {
     { field: 'id', headerName: 'ID', minWidth: 75, flex: 1 },
     { field: 'lastName', headerName: 'Nom', minWidth: 200, flex: 1 },
     { field: 'firstName', headerName: 'Prénom', minWidth: 200, flex: 1 },
-    { field: 'email', headerName: 'Email', minWidth: 300, flex: 1 },
+    { field: 'email', headerName: 'E-mail', minWidth: 300, flex: 1 },
     {
       field: 'roles',
       headerName: 'Rôles',

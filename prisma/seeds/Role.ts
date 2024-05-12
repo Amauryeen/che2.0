@@ -48,7 +48,7 @@ export default async function main() {
       where: { id: 5 },
       update: {},
       create: {
-        name: 'Opérateur',
+        name: 'Gestionnaire',
       },
     }),
   );

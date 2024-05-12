@@ -117,7 +117,7 @@ export default function Form(props: { roles: Role[]; users: User[] }) {
         <Grid item xs={12} sm={12}>
           <TextField
             type="email"
-            label="Email"
+            label="E-mail"
             {...register('email')}
             error={!!errors.email}
             helperText={errors.email?.message}
