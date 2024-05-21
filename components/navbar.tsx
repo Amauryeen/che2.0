@@ -16,6 +16,8 @@ import EventIcon from '@mui/icons-material/Event';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
+import HowToVoteIcon from '@mui/icons-material/HowToVote';
+import FolderIcon from '@mui/icons-material/Folder';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -85,14 +87,39 @@ export default function ResponsiveDrawer(props: Props) {
         </ListItem>
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
-            <Link href="/meetings">
-              <ListItemButton>
-                <ListItemIcon>
-                  <EventIcon />
-                </ListItemIcon>
-                <ListItemText primary="Réunions" />
-              </ListItemButton>
-            </Link>
+            {/* <Link href="/documents"> */}
+            <ListItemButton>
+              <ListItemIcon>
+                <FolderIcon />
+              </ListItemIcon>
+              <ListItemText primary="Documents" />
+            </ListItemButton>
+            {/* </Link> */}
+          </Box>
+        </ListItem>
+        <Divider />
+        <ListItem disablePadding>
+          <Box sx={{ width: '100%' }}>
+            {/* <Link href="/meetings"> */}
+            <ListItemButton>
+              <ListItemIcon>
+                <EventIcon />
+              </ListItemIcon>
+              <ListItemText primary="Réunions" />
+            </ListItemButton>
+            {/* </Link> */}
+          </Box>
+        </ListItem>
+        <ListItem disablePadding>
+          <Box sx={{ width: '100%' }}>
+            {/* <Link href="/votes"> */}
+            <ListItemButton>
+              <ListItemIcon>
+                <HowToVoteIcon />
+              </ListItemIcon>
+              <ListItemText primary="Votes" />
+            </ListItemButton>
+            {/* </Link> */}
           </Box>
         </ListItem>
         <Divider />
@@ -110,14 +137,14 @@ export default function ResponsiveDrawer(props: Props) {
         </ListItem>
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
-            <Link href="/settings">
-              <ListItemButton>
-                <ListItemIcon>
-                  <SettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Réglages" />
-              </ListItemButton>
-            </Link>
+            {/* <Link href="/settings"> */}
+            <ListItemButton>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Réglages" />
+            </ListItemButton>
+            {/* </Link> */}
           </Box>
         </ListItem>
         <Divider />
