@@ -60,8 +60,8 @@ export default function UsersTable(props: { users: User[] }) {
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
-          <Link href={`#`}>
-            <IconButton disabled>
+          <Link href={`/users/${params.row.id}`}>
+            <IconButton>
               <VisibilityIcon />
             </IconButton>
           </Link>

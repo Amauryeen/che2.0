@@ -100,14 +100,14 @@ export default function ResponsiveDrawer(props: Props) {
         <Divider />
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
-            {/* <Link href="/meetings"> */}
-            <ListItemButton>
-              <ListItemIcon>
-                <EventIcon />
-              </ListItemIcon>
-              <ListItemText primary="Réunions" />
-            </ListItemButton>
-            {/* </Link> */}
+            <Link href="/meetings">
+              <ListItemButton>
+                <ListItemIcon>
+                  <EventIcon />
+                </ListItemIcon>
+                <ListItemText primary="Réunions" />
+              </ListItemButton>
+            </Link>
           </Box>
         </ListItem>
         <ListItem disablePadding>

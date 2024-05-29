@@ -17,6 +17,13 @@ enum UserStatus {
   inactive
 }
 
+enum MeetingStatus {
+  started
+  planned
+  finished
+  cancelled
+}
+
 // Models
 
 model User {
@@ -29,7 +36,7 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now()) @updatedAt
 }
-
+  
 model Role {
   id        Int        @id @default(autoincrement())
   name      String
@@ -46,4 +53,16 @@ model UserRole {
   role      Role     @relation(fields: [roleId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Meeting {
+  id        Int           @id @default(autoincrement())
+  status    MeetingStatus @default(planned)
+  title     String
+  startTime DateTime
+  endTime   DateTime
+  location  String?
+  url       String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @default(now()) @updatedAt
 }
