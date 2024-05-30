@@ -66,7 +66,7 @@ export default function MeetingsTable(props: { meetings: Meeting[] }) {
                 variant="outlined"
               />
             );
-          case 'finished':
+          case 'ended':
             return (
               <Chip
                 icon={<DoneIcon />}

@@ -20,23 +20,31 @@ enum UserStatus {
 enum MeetingStatus {
   started
   planned
-  finished
+  ended
   cancelled
+}
+
+enum MeetingPresence {
+  present
+  absent
+  unknown
 }
 
 // Models
 
 model User {
-  id        Int        @id @default(autoincrement())
-  status    UserStatus @default(active)
-  email     String     @unique
-  firstName String
-  lastName  String
-  roles     UserRole[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now()) @updatedAt
+  id           Int               @id @default(autoincrement())
+  status       UserStatus        @default(active)
+  email        String            @unique
+  firstName    String
+  lastName     String
+  roles        UserRole[]
+  meetings     MeetingAttendee[] @relation(name: "MeetingAttendeeUser")
+  procurations MeetingAttendee[] @relation(name: "MeetingAttendeeProcurer")
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @default(now()) @updatedAt
 }
-  
+
 model Role {
   id        Int        @id @default(autoincrement())
   name      String
@@ -56,13 +64,28 @@ model UserRole {
 }
 
 model Meeting {
-  id        Int           @id @default(autoincrement())
-  status    MeetingStatus @default(planned)
-  title     String
-  startTime DateTime
-  endTime   DateTime
-  location  String?
-  url       String?
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @default(now()) @updatedAt
+  id          Int               @id @default(autoincrement())
+  status      MeetingStatus     @default(planned)
+  title       String
+  description String
+  startTime   DateTime
+  endTime     DateTime
+  location    String?
+  url         String?
+  attendees   MeetingAttendee[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @default(now()) @updatedAt
+}
+
+model MeetingAttendee {
+  id         Int             @id @default(autoincrement())
+  meetingId  Int
+  meeting    Meeting         @relation(fields: [meetingId], references: [id])
+  userId     Int
+  user       User            @relation(name: "MeetingAttendeeUser", fields: [userId], references: [id])
+  presence   MeetingPresence @default(unknown)
+  procurerId Int?
+  procurer   User?           @relation(name: "MeetingAttendeeProcurer", fields: [procurerId], references: [id])
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @default(now()) @updatedAt
 }
