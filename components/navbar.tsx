@@ -164,8 +164,14 @@ export default function ResponsiveDrawer(props: Props) {
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ padding: '1rem', textAlign: 'center' }}>
         <Typography variant="body2" noWrap component="div">
-          © 2024{' '}
-          <Link href="https://github.com/Amauryeen/EPHEC_tfe">CHE2</Link>
+          <Link href="https://github.com/Amauryeen">
+            © 2024 Amaury GROTARD
+          </Link>
+        </Typography>
+        <Typography variant="body2" noWrap component="div" fontSize={10}>
+          {process.env.VERCEL_DEPLOYMENT_ID
+            ? `${process.env.VERCEL_DEPLOYMENT_ID}`
+            : 'Version inconnue'}
         </Typography>
       </Box>
     </div>
