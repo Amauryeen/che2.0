@@ -11,9 +11,11 @@ import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
+  applicationName: 'CHE2.0',
   title: 'CHE2.0',
   description:
     "Plateforme de gestion des tâches numériques du Conseil des Étudiants de l'EPHEC",
+  manifest: '/manifest.json',
 };
 
 export default async function RootLayout({
