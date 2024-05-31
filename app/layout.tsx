@@ -28,7 +28,7 @@ export default async function RootLayout({
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <html lang="fr">
+      <html lang="fr" suppressHydrationWarning>
         <Analytics />
         <body>
           <AppRouterCacheProvider>
