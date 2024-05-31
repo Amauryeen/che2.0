@@ -72,9 +72,9 @@ export default function ResponsiveDrawer(props: Props) {
         </Typography>
       </Box>
       <List>
-        <Divider />
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
+            <Divider />
             <Link href="/">
               <ListItemButton>
                 <ListItemIcon>
@@ -97,9 +97,9 @@ export default function ResponsiveDrawer(props: Props) {
             </Link>
           </Box>
         </ListItem>
-        <Divider />
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
+            <Divider />
             <Link href="/meetings">
               <ListItemButton>
                 <ListItemIcon>
@@ -122,9 +122,9 @@ export default function ResponsiveDrawer(props: Props) {
             {/* </Link> */}
           </Box>
         </ListItem>
-        <Divider />
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
+            <Divider />
             <Link href="/users">
               <ListItemButton>
                 <ListItemIcon>
@@ -147,10 +147,10 @@ export default function ResponsiveDrawer(props: Props) {
             {/* </Link> */}
           </Box>
         </ListItem>
-        <Divider />
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
-            <Link href="/api/auth/signout">
+            <Divider />
+            <Link href="/signout">
               <ListItemButton>
                 <ListItemIcon>
                   <LogoutIcon />
@@ -162,14 +162,12 @@ export default function ResponsiveDrawer(props: Props) {
         </ListItem>
       </List>
       <Box sx={{ flexGrow: 1 }} />
-      {/* <Box sx={{ padding: '1rem' }}>
+      <Box sx={{ padding: '1rem', textAlign: 'center' }}>
         <Typography variant="body2" noWrap component="div">
-          {props.name}
+          © 2024{' '}
+          <Link href="https://github.com/Amauryeen/EPHEC_tfe">CHE2</Link>
         </Typography>
-        <Typography variant="body2" noWrap component="div">
-          {props.email}
-        </Typography>
-      </Box> */}
+      </Box>
     </div>
   );
 
