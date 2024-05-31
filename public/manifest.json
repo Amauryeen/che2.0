@@ -1,18 +1,19 @@
 {
   "name": "CHE2.0",
   "short_name": "CHE2.0",
+  "description": "Plateforme de gestion des tâches numériques du Conseil des Étudiants de l'EPHEC",
   "icons": [
     {
       "src": "/icon.png",
-      "sizes": "500x500",
+      "sizes": "600x600",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
   "theme_color": "#272727",
   "background_color": "#121212",
-  "start_url": ".",
-  "scope": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait"
 }
