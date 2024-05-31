@@ -7,10 +7,14 @@ export default async function Page() {
     <Card variant="outlined" sx={{ p: 2 }}>
       <Box sx={{ display: 'flex' }}>
         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-          Bienvenue
+          Hors-ligne
         </Typography>
       </Box>
-      Bienvenue sur CHE2.0!
+      Vous n&apos;êtes pas connecté à Internet. Veuillez vérifier votre
+      connexion.
+      <br />
+      La page se rechargera automatiquement dès que vous serez de nouveau
+      connecté.
     </Card>
   );
 }
