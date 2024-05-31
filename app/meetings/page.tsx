@@ -1,11 +1,11 @@
 'use server';
 import { Box, Button, Card, Typography } from '@mui/material';
-import MeetingsTable from './meetings-table';
+import MeetingsTable from './table';
 import Link from 'next/link';
 import { getMeetings } from '@/services/meetings';
 import AddIcon from '@mui/icons-material/Add';
 
-export default async function MeetingsPage() {
+export default async function Page() {
   const meetings = await getMeetings();
 
   return (

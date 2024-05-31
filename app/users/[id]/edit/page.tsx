@@ -6,11 +6,7 @@ import ProtectedRoute from '@/components/protected-route';
 import { getUserById, getUsers } from '@/services/users';
 import NotFound from '@/components/errors/not-found';
 
-export default async function UsersEditPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function Page({ params }: { params: { id: string } }) {
   const userId = parseInt(params.id);
   const user: any = await getUserById(userId);
 

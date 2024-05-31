@@ -1,6 +1,8 @@
 'use client';
 import { createTheme } from '@mui/material/styles';
-import { frFR } from '@mui/x-data-grid/locales';
+import { frFR as dataGridfrFR } from '@mui/x-data-grid/locales';
+import { frFR as corefrFR } from '@mui/material/locale';
+import { frFR as datePickerfrFR } from '@mui/x-date-pickers/locales';
 
 const theme = createTheme(
   {
@@ -8,7 +10,9 @@ const theme = createTheme(
       mode: 'dark',
     },
   },
-  frFR,
+  dataGridfrFR,
+  corefrFR,
+  datePickerfrFR,
 );
 
 export default theme;

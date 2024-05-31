@@ -6,12 +6,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
+import CheckIcon from '@mui/icons-material/Check';
 import IconButton from '@mui/material/IconButton';
 import Link from 'next/link';
 import { Chip } from '@mui/material';
 
-export default function MeetingsTable(props: { meetings: Meeting[] }) {
+export default function Table(props: { meetings: Meeting[] }) {
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 75, flex: 1 },
     { field: 'title', headerName: 'Titre', minWidth: 150, flex: 1 },
@@ -69,7 +69,7 @@ export default function MeetingsTable(props: { meetings: Meeting[] }) {
           case 'ended':
             return (
               <Chip
-                icon={<DoneIcon />}
+                icon={<CheckIcon />}
                 label="Terminée"
                 color="info"
                 variant="outlined"

@@ -26,31 +26,43 @@ enum MeetingStatus {
 
 enum MeetingPresence {
   present
-  absent
+  excused
   unknown
+}
+
+enum DocumentStatus {
+  pinned
+  effective
+  archived
 }
 
 // Models
 
 model User {
-  id           Int               @id @default(autoincrement())
-  status       UserStatus        @default(active)
-  email        String            @unique
-  firstName    String
-  lastName     String
-  roles        UserRole[]
-  meetings     MeetingAttendee[] @relation(name: "MeetingAttendeeUser")
-  procurations MeetingAttendee[] @relation(name: "MeetingAttendeeProcurer")
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @default(now()) @updatedAt
+  id               Int               @id @default(autoincrement())
+  status           UserStatus        @default(active)
+  email            String            @unique
+  firstName        String
+  lastName         String
+  roles            UserRole[]
+  meetings         MeetingAttendee[] @relation(name: "MeetingAttendeeUser")
+  procurations     MeetingAttendee[] @relation(name: "MeetingAttendeeProcurer")
+  createdDocuments Document[]
+  createdMeetings  Meeting[]
+  createdUsers     User[]            @relation(name: "UserCreator")
+  createdAt        DateTime          @default(now())
+  creatorId        Int?
+  creator          User?             @relation(name: "UserCreator", fields: [creatorId], references: [id])
+  updatedAt        DateTime          @default(now()) @updatedAt
 }
 
 model Role {
-  id        Int        @id @default(autoincrement())
+  id        Int            @id @default(autoincrement())
   name      String
-  userRole  UserRole[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now()) @updatedAt
+  users     UserRole[]
+  documents DocumentRole[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @default(now()) @updatedAt
 }
 
 model UserRole {
@@ -63,6 +75,32 @@ model UserRole {
   updatedAt DateTime @default(now()) @updatedAt
 }
 
+model Document {
+  id          Int               @id @default(autoincrement())
+  status      DocumentStatus    @default(effective)
+  title       String
+  description String
+  name        String
+  type        String
+  url         String
+  meetings    MeetingDocument[]
+  roles       DocumentRole[]
+  createdAt   DateTime          @default(now())
+  creatorId   Int?
+  creator     User?             @relation(fields: [creatorId], references: [id])
+  updatedAt   DateTime          @default(now()) @updatedAt
+}
+
+model DocumentRole {
+  id         Int      @id @default(autoincrement())
+  documentId Int
+  document   Document @relation(fields: [documentId], references: [id])
+  roleId     Int
+  role       Role     @relation(fields: [roleId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+}
+
 model Meeting {
   id          Int               @id @default(autoincrement())
   status      MeetingStatus     @default(planned)
@@ -73,7 +111,10 @@ model Meeting {
   location    String?
   url         String?
   attendees   MeetingAttendee[]
+  documents   MeetingDocument[]
   createdAt   DateTime          @default(now())
+  creatorId   Int?
+  creator     User?             @relation(fields: [creatorId], references: [id])
   updatedAt   DateTime          @default(now()) @updatedAt
 }
 
@@ -88,4 +129,14 @@ model MeetingAttendee {
   procurer   User?           @relation(name: "MeetingAttendeeProcurer", fields: [procurerId], references: [id])
   createdAt  DateTime        @default(now())
   updatedAt  DateTime        @default(now()) @updatedAt
+}
+
+model MeetingDocument {
+  id         Int      @id @default(autoincrement())
+  meetingId  Int
+  meeting    Meeting  @relation(fields: [meetingId], references: [id])
+  documentId Int
+  document   Document @relation(fields: [documentId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }

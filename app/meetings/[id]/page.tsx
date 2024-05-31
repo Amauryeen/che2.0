@@ -14,14 +14,10 @@ import {
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
+import CheckIcon from '@mui/icons-material/Check';
 import Link from 'next/link';
 
-export default async function MeetingPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function Page({ params }: { params: { id: string } }) {
   const meetingId = parseInt(params.id);
   const meeting: any = await getMeetingById(meetingId);
 
@@ -29,8 +25,8 @@ export default async function MeetingPage({
 
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={4}>
           <Card variant="outlined" sx={{ p: 2 }}>
             <Box sx={{ display: 'flex' }}>
               <Typography
@@ -64,7 +60,7 @@ export default async function MeetingPage({
                     case 'ended':
                       return (
                         <Chip
-                          icon={<DoneIcon />}
+                          icon={<CheckIcon />}
                           label="Terminée"
                           color="info"
                           variant="outlined"
@@ -106,11 +102,13 @@ export default async function MeetingPage({
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>URL:</strong>{' '}
-              <Link href={meeting.url}>{meeting.url}</Link>
+              {meeting.url ? (
+                <Link href={meeting.url}>{meeting.url}</Link>
+              ) : null}
             </Typography>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <Card variant="outlined" sx={{ p: 2 }}>
             <Box sx={{ display: 'flex' }}>
               <Typography
@@ -161,7 +159,9 @@ export default async function MeetingPage({
               </Button>
             </Link>
           </Card>
-          <Card variant="outlined" sx={{ p: 2, mt: 2 }}>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Card variant="outlined" sx={{ p: 2 }}>
             <Box sx={{ display: 'flex' }}>
               <Typography
                 sx={{ fontSize: 20 }}
@@ -171,7 +171,22 @@ export default async function MeetingPage({
                 Annexes
               </Typography>
             </Box>
-            LOREM IPSUM
+            {meeting.documents.length === 0
+              ? 'Vide.'
+              : meeting.documents.map((document: any) => (
+                  <Link
+                    key={document.documentId}
+                    href={'/documents/' + document.documentId}
+                  >
+                    <Button
+                      variant="outlined"
+                      color="info"
+                      sx={{ marginBottom: '10px', width: '100%' }}
+                    >
+                      {document.document.title}
+                    </Button>
+                  </Link>
+                ))}
           </Card>
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -182,10 +197,107 @@ export default async function MeetingPage({
                 color="text.secondary"
                 gutterBottom
               >
-                Participants
+                Participants ({meeting.attendees.length})
               </Typography>
             </Box>
-            LOREM IPSUM
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={4}>
+                <Card variant="outlined" sx={{ p: 2 }}>
+                  <Box sx={{ display: 'flex' }}>
+                    <Typography
+                      sx={{ fontSize: 20 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Présents (
+                      {
+                        meeting.attendees.filter(
+                          (attendee: any) => attendee.presence === 'present',
+                        ).length
+                      }
+                      )
+                    </Typography>
+                  </Box>
+                  {meeting.attendees
+                    .filter((attendee: any) => attendee.presence === 'present')
+                    .map((attendee: any) => (
+                      <Chip
+                        key={attendee.id}
+                        label={
+                          attendee.user.firstName + ' ' + attendee.user.lastName
+                        }
+                        color="success"
+                        variant="outlined"
+                        sx={{ m: '3px' }}
+                      />
+                    ))}
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Card variant="outlined" sx={{ p: 2 }}>
+                  <Box sx={{ display: 'flex' }}>
+                    <Typography
+                      sx={{ fontSize: 20 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Inconnus (
+                      {
+                        meeting.attendees.filter(
+                          (attendee: any) => attendee.presence === 'unknown',
+                        ).length
+                      }
+                      )
+                    </Typography>
+                  </Box>
+                  {meeting.attendees
+                    .filter((attendee: any) => attendee.presence === 'unknown')
+                    .map((attendee: any) => (
+                      <Chip
+                        key={attendee.id}
+                        label={
+                          attendee.user.firstName + ' ' + attendee.user.lastName
+                        }
+                        color="default"
+                        variant="outlined"
+                        sx={{ m: '3px' }}
+                      />
+                    ))}
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Card variant="outlined" sx={{ p: 2 }}>
+                  <Box sx={{ display: 'flex' }}>
+                    <Typography
+                      sx={{ fontSize: 20 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Excusés (
+                      {
+                        meeting.attendees.filter(
+                          (attendee: any) => attendee.presence === 'excused',
+                        ).length
+                      }
+                      )
+                    </Typography>
+                  </Box>
+                  {meeting.attendees
+                    .filter((attendee: any) => attendee.presence === 'excused')
+                    .map((attendee: any) => (
+                      <Chip
+                        key={attendee.id}
+                        label={
+                          attendee.user.firstName + ' ' + attendee.user.lastName
+                        }
+                        color="error"
+                        variant="outlined"
+                        sx={{ m: '3px' }}
+                      />
+                    ))}
+                </Card>
+              </Grid>
+            </Grid>
           </Card>
         </Grid>
       </Grid>

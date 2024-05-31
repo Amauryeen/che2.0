@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Link from 'next/link';
 import { Chip } from '@mui/material';
 
-export default function UsersTable(props: { users: User[] }) {
+export default function Table(props: { users: User[] }) {
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 75, flex: 1 },
     { field: 'lastName', headerName: 'Nom', minWidth: 200, flex: 1 },
@@ -23,7 +23,7 @@ export default function UsersTable(props: { users: User[] }) {
       renderCell: (params: GridRenderCellParams) => {
         return params.row.roles.map((role: any) => (
           <Chip
-            key={role.userId}
+            key={role.role.name}
             label={role.role.name}
             sx={{ mr: '5px' }}
             variant="outlined"
