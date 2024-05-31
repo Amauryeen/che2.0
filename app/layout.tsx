@@ -36,6 +36,7 @@ export default async function RootLayout({
               <Navbar
                 name={session.user.lastName + ' ' + session.user.firstName}
                 email={session.user.email}
+                deployment={process.env.VERCEL_DEPLOYMENT_ID}
               >
                 {children}
               </Navbar>

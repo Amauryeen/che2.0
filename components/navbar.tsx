@@ -30,6 +30,7 @@ interface Props {
   children: React.ReactNode;
   email: string;
   name: string;
+  deployment: string | undefined;
 }
 
 export default function ResponsiveDrawer(props: Props) {
@@ -168,10 +169,8 @@ export default function ResponsiveDrawer(props: Props) {
             © 2024 Amaury GROTARD
           </Link>
         </Typography>
-        <Typography variant="body2" noWrap component="div" fontSize={10}>
-          {process.env.VERCEL_DEPLOYMENT_ID
-            ? `${process.env.VERCEL_DEPLOYMENT_ID}`
-            : 'Version inconnue'}
+        <Typography variant="body2" noWrap component="div" fontSize={9}>
+          {props.deployment ? `${props.deployment}` : 'Version inconnue'}
         </Typography>
       </Box>
     </div>
