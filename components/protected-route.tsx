@@ -7,8 +7,10 @@ export default async function ProtectedRoute({
   authorizedRoles,
 }: {
   children: React.ReactNode;
-  authorizedRoles: string[];
+  authorizedRoles: string[] | undefined;
 }) {
+  if (!authorizedRoles || authorizedRoles?.length === 0) return <>children</>;
+
   const session = await getSession();
 
   return (

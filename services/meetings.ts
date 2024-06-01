@@ -11,7 +11,7 @@ export async function getMeetingById(id: number) {
   return prisma.meeting.findUnique({
     where: { id },
     include: {
-      attendees: { include: { user: true } },
+      attendees: { include: { user: { include: { roles: true } } } },
       documents: { include: { document: true } },
     },
   });

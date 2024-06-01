@@ -81,9 +81,9 @@ export default function Form(props: { users: User[]; documents: Document[] }) {
       loading: 'Création en cours...',
       success: () => {
         router.push('/meetings');
-        return <>La réunion a été créée avec succès.</>;
+        return <>La réunion a été planifiée avec succès.</>;
       },
-      error: <>La réunion n&apos;a pas pu être créée.</>,
+      error: <>La réunion n&apos;a pas pu être planifiée.</>,
     });
   }
 
@@ -261,7 +261,7 @@ export default function Form(props: { users: User[]; documents: Document[] }) {
         </Grid>
         <Grid item xs={12}>
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Créer
+            Planifier
           </Button>
         </Grid>
       </Grid>

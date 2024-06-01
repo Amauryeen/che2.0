@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -18,11 +19,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import FolderIcon from '@mui/icons-material/Folder';
-import SettingsIcon from '@mui/icons-material/Settings';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const drawerWidth = 230;
 
@@ -113,14 +115,14 @@ export default function ResponsiveDrawer(props: Props) {
         </ListItem>
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
-            {/* <Link href="/votes"> */}
-            <ListItemButton>
-              <ListItemIcon>
-                <HowToVoteIcon />
-              </ListItemIcon>
-              <ListItemText primary="Votes" />
-            </ListItemButton>
-            {/* </Link> */}
+            <Link href="/votes">
+              <ListItemButton>
+                <ListItemIcon>
+                  <HowToVoteIcon />
+                </ListItemIcon>
+                <ListItemText primary="Votes" />
+              </ListItemButton>
+            </Link>
           </Box>
         </ListItem>
         <ListItem disablePadding>
@@ -134,18 +136,6 @@ export default function ResponsiveDrawer(props: Props) {
                 <ListItemText primary="Utilisateurs" />
               </ListItemButton>
             </Link>
-          </Box>
-        </ListItem>
-        <ListItem disablePadding>
-          <Box sx={{ width: '100%' }}>
-            {/* <Link href="/settings"> */}
-            <ListItemButton>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Réglages" />
-            </ListItemButton>
-            {/* </Link> */}
           </Box>
         </ListItem>
         <ListItem disablePadding>
@@ -176,6 +166,8 @@ export default function ResponsiveDrawer(props: Props) {
     </div>
   );
 
+  const router = useRouter();
+
   return (
     <Box>
       <CssBaseline />
@@ -195,6 +187,17 @@ export default function ResponsiveDrawer(props: Props) {
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            edge="start"
+            sx={{ mr: 2 }}
+            onClick={() => {
+              router.refresh();
+              toast.success('La page a été rechargée.');
+            }}
+          >
+            <RefreshIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1, textAlign: 'right' }}>
             <Typography variant="body2" noWrap component="div">

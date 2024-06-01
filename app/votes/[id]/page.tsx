@@ -1,7 +1,7 @@
 'use server';
 
 import NotFound from '@/components/errors/not-found';
-import { getMeetingById } from '@/services/meetings';
+import { getVoteById } from '@/services/votes';
 import {
   Box,
   Button,
@@ -16,17 +16,20 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import Link from 'next/link';
+import { getMeetingById } from '@/services/meetings';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const meetingId = parseInt(params.id);
-  const meeting: any = await getMeetingById(meetingId);
+  const voteId = parseInt(params.id);
+  const vote: any = await getVoteById(voteId);
 
-  if (!meeting) return <NotFound />;
+  if (!vote) return <NotFound />;
+
+  const meeting: any = await getMeetingById(vote.meetingId);
 
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6}>
           <Card variant="outlined" sx={{ p: 2 }}>
             <Box sx={{ display: 'flex' }}>
               <Typography
@@ -34,16 +37,16 @@ export default async function Page({ params }: { params: { id: string } }) {
                 color="text.secondary"
                 gutterBottom
               >
-                {meeting.title}
+                {vote.title}
               </Typography>
               <Box sx={{ flexGrow: 1, textAlign: 'right' }}>
                 {(() => {
-                  switch (meeting.status) {
+                  switch (vote.status) {
                     case 'started':
                       return (
                         <Chip
                           icon={<ArrowDownwardIcon />}
-                          label="Démarrée"
+                          label="Démarré"
                           color="success"
                           variant="outlined"
                         />
@@ -52,7 +55,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                       return (
                         <Chip
                           icon={<AccessTimeFilledIcon />}
-                          label="Planifiée"
+                          label="Planifié"
                           color="warning"
                           variant="outlined"
                         />
@@ -61,7 +64,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                       return (
                         <Chip
                           icon={<CheckIcon />}
-                          label="Terminée"
+                          label="Terminé"
                           color="info"
                           variant="outlined"
                         />
@@ -70,7 +73,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                       return (
                         <Chip
                           icon={<CloseIcon />}
-                          label="Annulée"
+                          label="Annulé"
                           color="error"
                           variant="outlined"
                         />
@@ -80,49 +83,29 @@ export default async function Page({ params }: { params: { id: string } }) {
               </Box>
             </Box>
             <Typography variant="body1" gutterBottom>
-              {meeting.description}
+              {vote.description}
             </Typography>
             <Divider sx={{ my: '10px' }} />
             <Typography variant="body1" gutterBottom>
-              <strong>Début:</strong>{' '}
-              {new Intl.DateTimeFormat('fr-FR', {
-                dateStyle: 'full',
-                timeStyle: 'short',
-              }).format(meeting.startTime)}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <strong>Fin:</strong>{' '}
-              {new Intl.DateTimeFormat('fr-FR', {
-                dateStyle: 'full',
-                timeStyle: 'short',
-              }).format(meeting.endTime)}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <strong>Lieu:</strong> {meeting.location}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <strong>URL:</strong>{' '}
-              {meeting.url ? (
-                <Link href={meeting.url}>{meeting.url}</Link>
-              ) : null}
+              <strong>Anonyme:</strong> {vote.anonymous ? 'Oui' : 'Non'}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Date de création:</strong>{' '}
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(meeting.createdAt)}
+              }).format(vote.createdAt)}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Date de modification:</strong>{' '}
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(meeting.updatedAt)}
+              }).format(vote.updatedAt)}
             </Typography>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6}>
           <Card variant="outlined" sx={{ p: 2 }}>
             <Box sx={{ display: 'flex' }}>
               <Typography
@@ -133,13 +116,22 @@ export default async function Page({ params }: { params: { id: string } }) {
                 Actions
               </Typography>
             </Box>
+            <Link href={'/meetings/' + params.id + '/cast'}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ marginBottom: '10px', width: '100%' }}
+              >
+                Voter
+              </Button>
+            </Link>
             <Link href={'/meetings/' + params.id + '/edit'}>
               <Button
                 variant="outlined"
                 color="primary"
                 sx={{ marginBottom: '10px', width: '100%' }}
               >
-                Éditer la réunion
+                Éditer le vote
               </Button>
             </Link>
             <Link href={'/meetings/' + params.id + '/start'}>
@@ -147,60 +139,31 @@ export default async function Page({ params }: { params: { id: string } }) {
                 variant="outlined"
                 color="success"
                 sx={{ marginBottom: '10px', width: '100%' }}
-                disabled={meeting.status !== 'planned'}
+                disabled={vote.status !== 'planned'}
               >
-                Démarrer la réunion
+                Démarrer le vote
               </Button>
             </Link>
-            <Link href={'/meetings/' + params.id + '/end'}>
+            <Link href={'/votes/' + params.id + '/end'}>
               <Button
                 variant="outlined"
                 color="warning"
                 sx={{ marginBottom: '10px', width: '100%' }}
-                disabled={meeting.status !== 'started'}
+                disabled={vote.status !== 'started'}
               >
-                Mettre fin à la réunion
+                Mettre fin au vote
               </Button>
             </Link>
-            <Link href={'/meetings/' + params.id + '/cancel'}>
+            <Link href={'/votes/' + params.id + '/cancel'}>
               <Button
                 variant="outlined"
                 color="error"
                 sx={{ marginBottom: '10px', width: '100%' }}
-                disabled={meeting.status !== 'planned'}
+                disabled={vote.status !== 'planned'}
               >
-                Annuler la réunion
+                Annuler le vote
               </Button>
             </Link>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Card variant="outlined" sx={{ p: 2 }}>
-            <Box sx={{ display: 'flex' }}>
-              <Typography
-                sx={{ fontSize: 20 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Annexes
-              </Typography>
-            </Box>
-            {meeting.documents.length === 0
-              ? 'Vide.'
-              : meeting.documents.map((document: any) => (
-                  <Link
-                    key={document.documentId}
-                    href={'/documents/' + document.documentId}
-                  >
-                    <Button
-                      variant="outlined"
-                      color="info"
-                      sx={{ marginBottom: '10px', width: '100%' }}
-                    >
-                      {document.document.title}
-                    </Button>
-                  </Link>
-                ))}
           </Card>
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -211,7 +174,17 @@ export default async function Page({ params }: { params: { id: string } }) {
                 color="text.secondary"
                 gutterBottom
               >
-                Participants ({meeting.attendees.length})
+                Participants (
+                {vote.votesFor +
+                  vote.votesAgainst +
+                  vote.votesAbstain +
+                  meeting.attendees.filter(
+                    (attendee: any) =>
+                      !vote.users.some(
+                        (user: any) => user.userId === attendee.userId,
+                      ),
+                  ).length}
+                )
               </Typography>
             </Box>
             <Grid container spacing={3}>
@@ -223,30 +196,23 @@ export default async function Page({ params }: { params: { id: string } }) {
                       color="text.secondary"
                       gutterBottom
                     >
-                      Présents (
-                      {
-                        meeting.attendees.filter(
-                          (attendee: any) => attendee.presence === 'present',
-                        ).length
-                      }
+                      Pour (
+                      {!vote.anonymous || vote.status !== 'started'
+                        ? vote.votesFor
+                        : '?'}
                       )
                     </Typography>
                   </Box>
-                  {meeting.attendees.filter(
-                    (attendee: any) => attendee.presence === 'present',
-                  ).length === 0
+                  {vote.users.filter((user: any) => user.value === 'for')
+                    .length === 0
                     ? 'Vide.'
-                    : meeting.attendees
-                        .filter(
-                          (attendee: any) => attendee.presence === 'present',
-                        )
-                        .map((attendee: any) => (
+                    : vote.users
+                        .filter((user: any) => user.value === 'for')
+                        .map((user: any) => (
                           <Chip
-                            key={attendee.id}
+                            key={user.id}
                             label={
-                              attendee.user.firstName +
-                              ' ' +
-                              attendee.user.lastName
+                              user.user.firstName + ' ' + user.user.lastName
                             }
                             color="success"
                             variant="outlined"
@@ -263,36 +229,56 @@ export default async function Page({ params }: { params: { id: string } }) {
                       color="text.secondary"
                       gutterBottom
                     >
-                      Inconnus (
-                      {
-                        meeting.attendees.filter(
-                          (attendee: any) => attendee.presence === 'unknown',
-                        ).length
-                      }
+                      Inconnu/Abstention (
+                      {!vote.anonymous || vote.status !== 'started'
+                        ? meeting.attendees.filter(
+                            (attendee: any) =>
+                              !vote.users.some(
+                                (user: any) => user.userId === attendee.userId,
+                              ),
+                          ).length + vote.votesAbstain
+                        : '?'}
                       )
                     </Typography>
                   </Box>
-                  {meeting.attendees.filter(
-                    (attendee: any) => attendee.presence === 'unknown',
+                  {vote.users.filter((user: any) => user.value === 'abstain')
+                    .length === 0 &&
+                  meeting.attendees.filter(
+                    (attendee: any) =>
+                      !vote.users.some(
+                        (user: any) => user.userId === attendee.userId,
+                      ),
                   ).length === 0
                     ? 'Vide.'
                     : meeting.attendees
                         .filter(
-                          (attendee: any) => attendee.presence === 'unknown',
+                          (attendee: any) =>
+                            !vote.users.some(
+                              (user: any) => user.userId === attendee.userId,
+                            ),
                         )
-                        .map((attendee: any) => (
+                        .map((user: any) => (
                           <Chip
-                            key={attendee.id}
+                            key={user.id}
                             label={
-                              attendee.user.firstName +
-                              ' ' +
-                              attendee.user.lastName
+                              user.user.firstName + ' ' + user.user.lastName
                             }
                             color="primary"
                             variant="outlined"
                             sx={{ m: '3px' }}
                           />
                         ))}
+                  {vote.users
+                    .filter((user: any) => user.value === 'abstain')
+                    .map((user: any) => (
+                      <Chip
+                        key={user.id}
+                        label={user.user.firstName + ' ' + user.user.lastName}
+                        color="secondary"
+                        variant="outlined"
+                        sx={{ m: '3px' }}
+                      />
+                    ))}
                 </Card>
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -303,30 +289,23 @@ export default async function Page({ params }: { params: { id: string } }) {
                       color="text.secondary"
                       gutterBottom
                     >
-                      Excusés (
-                      {
-                        meeting.attendees.filter(
-                          (attendee: any) => attendee.presence === 'excused',
-                        ).length
-                      }
+                      Contre (
+                      {!vote.anonymous || vote.status !== 'started'
+                        ? vote.votesFor
+                        : '?'}
                       )
                     </Typography>
                   </Box>
-                  {meeting.attendees.filter(
-                    (attendee: any) => attendee.presence === 'excused',
-                  ).length === 0
+                  {vote.users.filter((user: any) => user.value === 'against')
+                    .length === 0
                     ? 'Vide.'
-                    : meeting.attendees
-                        .filter(
-                          (attendee: any) => attendee.presence === 'excused',
-                        )
-                        .map((attendee: any) => (
+                    : vote.users
+                        .filter((user: any) => user.value === 'against')
+                        .map((user: any) => (
                           <Chip
-                            key={attendee.id}
+                            key={user.id}
                             label={
-                              attendee.user.firstName +
-                              ' ' +
-                              attendee.user.lastName
+                              user.user.firstName + ' ' + user.user.lastName
                             }
                             color="error"
                             variant="outlined"

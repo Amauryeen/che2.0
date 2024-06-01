@@ -2,20 +2,20 @@
 import { Card, Typography } from '@mui/material';
 import Form from './form';
 import ProtectedRoute from '@/components/protected-route';
-import { getUsers } from '@/services/users';
-import { getDocuments } from '@/services/documents';
+import { getRoles } from '@/services/roles';
+import { getMeetings } from '@/services/meetings';
 
 export default async function Page() {
-  const users = await getUsers();
-  const documents = await getDocuments();
+  const roles = await getRoles();
+  const meetings = await getMeetings();
 
   return (
     <ProtectedRoute authorizedRoles={['Gestionnaire']}>
       <Card variant="outlined" sx={{ p: 2 }}>
         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-          Planifier une réunion
+          Planifier un vote
         </Typography>
-        <Form users={users} documents={documents} />
+        <Form roles={roles} meetings={meetings} />
       </Card>
     </ProtectedRoute>
   );

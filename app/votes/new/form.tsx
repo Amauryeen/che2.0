@@ -2,8 +2,10 @@
 import {
   Box,
   Button,
+  Checkbox,
   Chip,
   FormControl,
+  FormControlLabel,
   FormHelperText,
   Grid,
   InputLabel,
@@ -14,30 +16,19 @@ import {
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
-import { Role } from '@prisma/client';
-import { createDocument } from '@/services/documents';
+import { Meeting, Role } from '@prisma/client';
+import { createVote } from '@/services/votes';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-export default function Form(props: { roles: Role[] }) {
+export default function Form(props: { roles: Role[]; meetings: Meeting[] }) {
   const router = useRouter();
   const schema = yup.object({
     title: yup.string().required('Veuillez renseigner ce champ'),
     description: yup.string().required('Veuillez renseigner ce champ'),
     roles: yup.array().of(yup.string()),
-    file: yup
-      .mixed()
-      .required('Veuillez renseigner ce champ')
-      .test('exists', 'Veuillez renseigner ce champ', (value: any) => {
-        return value[0] ? true : false;
-      })
-      .test(
-        'is-correct-size',
-        'Le fichier est trop lourd (>4Mo)',
-        (value: any) => {
-          return value[0] ? value[0].size <= 4194304 : false;
-        },
-      ),
+    meeting: yup.number().required('Veuillez renseigner ce champ'),
+    anonymous: yup.boolean(),
   });
 
   const { register, handleSubmit, formState, control } = useForm({
@@ -45,39 +36,22 @@ export default function Form(props: { roles: Role[] }) {
       title: '',
       description: '',
       roles: [],
-      file: undefined,
+      meeting: undefined,
+      anonymous: false,
     },
     resolver: yupResolver(schema),
   });
 
   const { errors } = formState;
 
-  async function uploadFile(data: any) {
-    const res = await fetch(`/api/documents?name=${data.file[0].name}`, {
-      method: 'POST',
-      body: data.file[0],
-    });
-
-    const body = await res.text();
-
-    await createDocument({
-      title: data.title,
-      description: data.description,
-      name: data.file[0].name,
-      type: data.file[0].type,
-      roles: data.roles,
-      url: body,
-    });
-  }
-
   function handleSave(formValues: any) {
-    toast.promise(uploadFile(formValues), {
-      loading: 'Import en cours...',
+    toast.promise(createVote(formValues), {
+      loading: 'Création en cours...',
       success: () => {
-        router.push('/documents');
-        return <>Le document a été importé avec succès.</>;
+        router.push('/votes');
+        return <>Le vote a été créé avec succès.</>;
       },
-      error: <>Le document n&apos;a pas pu être importé.</>,
+      error: <>Le vote n&apos;a pas pu être créé.</>,
     });
   }
 
@@ -106,7 +80,7 @@ export default function Form(props: { roles: Role[] }) {
             multiline
           />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12} sm={6}>
           <FormControl error={!!errors.roles} fullWidth>
             <Controller
               control={control}
@@ -145,18 +119,64 @@ export default function Form(props: { roles: Role[] }) {
             <FormHelperText>{errors.roles?.message}</FormHelperText>
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            type="file"
-            {...register('file')}
-            error={!!errors.file}
-            helperText={errors.file?.message}
-            fullWidth
+        <Grid item xs={12} sm={6}>
+          <FormControl error={!!errors.meeting} fullWidth>
+            <Controller
+              control={control}
+              name="meeting"
+              render={({ field: { value, onChange, ...fieldProps } }) => {
+                return (
+                  <>
+                    <InputLabel id="meeting">Réunion</InputLabel>
+                    <Select
+                      {...fieldProps}
+                      labelId="meeting"
+                      value={value}
+                      label="Réunion"
+                      onChange={e => onChange(e.target.value)}
+                      renderValue={selected => (
+                        <Box
+                          sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}
+                        >
+                          <Chip
+                            key={selected}
+                            label={
+                              props.meetings.find(
+                                meeting => meeting.id === selected,
+                              )?.title
+                            }
+                          />
+                        </Box>
+                      )}
+                    >
+                      {props.meetings
+                        .filter(
+                          meeting =>
+                            meeting.status === 'planned' ||
+                            meeting.status === 'started',
+                        )
+                        .map(meeting => (
+                          <MenuItem key={meeting.id} value={meeting.id}>
+                            {meeting.title}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </>
+                );
+              }}
+            />
+            <FormHelperText>{errors.meeting?.message}</FormHelperText>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={<Checkbox {...register('anonymous')} />}
+            label="Le vote est anonyme"
           />
         </Grid>
         <Grid item xs={12}>
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Importer
+            Planifier
           </Button>
         </Grid>
       </Grid>

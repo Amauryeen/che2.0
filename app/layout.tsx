@@ -4,7 +4,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import Navbar from '@/components/navbar';
 import { auth } from '@/auth';
 import Unauthenticated from '@/components/errors/unauthenticated';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import theme from '@/app/theme';
 import { ThemeProvider } from '@mui/material';
 import { Analytics } from '@vercel/analytics/react';
@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   description:
     "Plateforme de gestion des tâches numériques du Conseil des Étudiants de l'EPHEC",
   manifest: '/manifest.json',
+};
+
+export const viewport: Viewport = {
+  themeColor: '#272727',
 };
 
 export default async function RootLayout({

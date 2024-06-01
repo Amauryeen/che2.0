@@ -36,6 +36,19 @@ enum DocumentStatus {
   archived
 }
 
+enum VoteStatus {
+  started
+  planned
+  ended
+  cancelled
+}
+
+enum VoteValue {
+  for
+  against
+  abstain
+}
+
 // Models
 
 model User {
@@ -47,8 +60,10 @@ model User {
   roles            UserRole[]
   meetings         MeetingAttendee[] @relation(name: "MeetingAttendeeUser")
   procurations     MeetingAttendee[] @relation(name: "MeetingAttendeeProcurer")
+  votes            VoteUser[]
   createdDocuments Document[]
   createdMeetings  Meeting[]
+  createdVotes     Vote[]
   createdUsers     User[]            @relation(name: "UserCreator")
   createdAt        DateTime          @default(now())
   creatorId        Int?
@@ -61,6 +76,7 @@ model Role {
   name      String
   users     UserRole[]
   documents DocumentRole[]
+  votes     VoteRole[]
   createdAt DateTime       @default(now())
   updatedAt DateTime       @default(now()) @updatedAt
 }
@@ -112,6 +128,7 @@ model Meeting {
   url         String?
   attendees   MeetingAttendee[]
   documents   MeetingDocument[]
+  votes       Vote[]
   createdAt   DateTime          @default(now())
   creatorId   Int?
   creator     User?             @relation(fields: [creatorId], references: [id])
@@ -139,4 +156,44 @@ model MeetingDocument {
   document   Document @relation(fields: [documentId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now()) @updatedAt
+}
+
+model Vote {
+  id           Int        @id @default(autoincrement())
+  status       VoteStatus @default(planned)
+  meetingId    Int
+  meeting      Meeting    @relation(fields: [meetingId], references: [id])
+  title        String
+  description  String
+  anonymous    Boolean    @default(false)
+  votesFor     Int        @default(0)
+  votesAgainst Int        @default(0)
+  votesAbstain Int        @default(0)
+  users        VoteUser[]
+  roles        VoteRole[]
+  createdAt    DateTime   @default(now())
+  creatorId    Int?
+  creator      User?      @relation(fields: [creatorId], references: [id])
+  updatedAt    DateTime   @default(now()) @updatedAt
+}
+
+model VoteRole {
+  id        Int      @id @default(autoincrement())
+  voteId    Int
+  vote      Vote     @relation(fields: [voteId], references: [id])
+  roleId    Int
+  role      Role     @relation(fields: [roleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model VoteUser {
+  id        Int        @id @default(autoincrement())
+  voteId    Int
+  vote      Vote       @relation(fields: [voteId], references: [id])
+  userId    Int
+  user      User       @relation(fields: [userId], references: [id])
+  value     VoteValue?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
 }
