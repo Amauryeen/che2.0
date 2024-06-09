@@ -44,3 +44,9 @@ export async function createDocument(data: {
     })),
   });
 }
+
+export async function deleteDocument(id: number) {
+  await prisma.documentRole.deleteMany({ where: { documentId: id } });
+  await prisma.meetingDocument.deleteMany({ where: { documentId: id } });
+  await prisma.document.delete({ where: { id } });
+}
