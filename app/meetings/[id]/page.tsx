@@ -15,6 +15,7 @@ import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import AddTaskIcon from '@mui/icons-material/AddTask';
 import Link from 'next/link';
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -213,6 +214,18 @@ export default async function Page({ params }: { params: { id: string } }) {
               >
                 Participants ({meeting.attendees.length})
               </Typography>
+              <Box sx={{ flexGrow: 1, textAlign: 'right' }}>
+                <Link href={'/meetings/' + params.id + '/presence'}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<AddTaskIcon />}
+                    sx={{ marginBottom: '10px' }}
+                  >
+                    Définir ma présence
+                  </Button>
+                </Link>
+              </Box>
             </Box>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={4}>

@@ -49,3 +49,24 @@ export async function createMeeting(data: {
     },
   });
 }
+
+export async function startMeeting(id: number) {
+  await prisma.meeting.update({
+    where: { id, status: 'planned' },
+    data: { status: 'started' },
+  });
+}
+
+export async function endMeeting(id: number) {
+  await prisma.meeting.update({
+    where: { id, status: 'started' },
+    data: { status: 'ended' },
+  });
+}
+
+export async function cancelMeeting(id: number) {
+  await prisma.meeting.update({
+    where: { id, status: 'planned' },
+    data: { status: 'cancelled' },
+  });
+}

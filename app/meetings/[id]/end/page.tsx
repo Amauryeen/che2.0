@@ -1,22 +1,22 @@
 'use server';
 
-import { getDocumentById } from '@/services/documents';
+import { getMeetingById } from '@/services/meetings';
 import NotFound from '@/components/errors/not-found';
 import ProtectedRoute from '@/components/protected-route';
 import { Box, Button, Card, Grid, Typography } from '@mui/material';
 import ConfirmButton from './confirm-button';
 import Link from 'next/link';
-import { deleteDocument } from '@/services/documents';
+import { endMeeting } from '@/services/meetings';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const documentId = parseInt(params.id);
-  const document: any = await getDocumentById(documentId);
+  const meetingId = parseInt(params.id);
+  const meeting: any = await getMeetingById(meetingId);
 
-  if (!document) return <NotFound />;
+  if (!meeting || meeting.status !== 'started') return <NotFound />;
 
   async function confirm() {
     'use server';
-    await deleteDocument(documentId);
+    await endMeeting(meetingId);
   }
 
   return (
@@ -24,22 +24,22 @@ export default async function Page({ params }: { params: { id: string } }) {
       <Card variant="outlined" sx={{ p: 2 }}>
         <Box sx={{ display: 'flex' }}>
           <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-            Supprimer un document
+            Mettre fin à une réunion
           </Typography>
         </Box>
         <Box sx={{ mt: 2 }}>
           <Typography>
-            Veuillez confirmer la suppression du document suivant:
+            Veuillez confirmer la fin de la réunion suivante:
           </Typography>
           <Card variant="outlined" sx={{ p: 2, my: 2 }}>
-            <Typography variant="h6">{document.title}</Typography>
+            <Typography variant="h6">{meeting.title}</Typography>
           </Card>
           <Grid container spacing={2} sx={{ pt: 2 }}>
             <Grid item xs={12} sm={6}>
-              <ConfirmButton confirm={confirm} />
+              <ConfirmButton confirm={confirm} id={meetingId} />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Link href={'/documents/' + documentId}>
+              <Link href={'/meetings/' + meetingId}>
                 <Button
                   variant="contained"
                   color="primary"

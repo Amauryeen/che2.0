@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-export default function DeleteButton(props: { deleteDocument: any }) {
+export default function ConfirmButton(props: { confirm: any; id: number }) {
   const router = useRouter();
 
   return (
@@ -12,18 +12,18 @@ export default function DeleteButton(props: { deleteDocument: any }) {
       variant="contained"
       color="error"
       onClick={() => {
-        toast.promise(props.deleteDocument(), {
-          loading: 'Suppression en cours...',
+        toast.promise(props.confirm(), {
+          loading: 'Annulation en cours...',
           success: () => {
-            router.push('/documents');
-            return 'Le document a été supprimé.';
+            router.push('/meetings/' + props.id);
+            return 'La réunion a été annulée.';
           },
-          error: "Le document n'a pas pu être supprimé.",
+          error: "La réunion n'a pas pu être annulée.",
         });
       }}
       sx={{ width: '100%' }}
     >
-      Supprimer
+      Mettre fin
     </Button>
   );
 }

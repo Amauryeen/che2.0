@@ -100,7 +100,7 @@ export default function Table(props: { meetings: Meeting[] }) {
             </IconButton>
           </Link>
           <Link href={`/meetings/${params.row.id}/edit`}>
-            <IconButton>
+            <IconButton disabled>
               <EditIcon />
             </IconButton>
           </Link>
