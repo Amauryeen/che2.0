@@ -156,6 +156,7 @@ export default function Form(props: {
                         .filter(
                           attendee =>
                             attendee.presence === 'present' &&
+                            attendee.userId !== props.attendee.userId &&
                             !props.attendees.some(
                               attendee2 =>
                                 attendee.userId === attendee2.procurerId,

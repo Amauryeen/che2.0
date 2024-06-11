@@ -12,7 +12,7 @@ export async function getVotes() {
 export async function getVoteById(id: number) {
   return prisma.vote.findUnique({
     where: { id },
-    include: { users: { include: { user: true } } },
+    include: { roles: true, users: { include: { user: true } } },
   });
 }
 
