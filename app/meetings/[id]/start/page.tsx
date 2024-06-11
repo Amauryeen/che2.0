@@ -27,30 +27,28 @@ export default async function Page({ params }: { params: { id: string } }) {
             Démarrer une réunion
           </Typography>
         </Box>
-        <Box sx={{ mt: 2 }}>
-          <Typography>
-            Veuillez confirmer le démarrage de la réunion suivante:
-          </Typography>
-          <Card variant="outlined" sx={{ p: 2, my: 2 }}>
-            <Typography variant="h6">{meeting.title}</Typography>
-          </Card>
-          <Grid container spacing={2} sx={{ pt: 2 }}>
-            <Grid item xs={12} sm={6}>
-              <ConfirmButton confirm={confirm} id={meetingId} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Link href={'/meetings/' + meetingId}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ width: '100%' }}
-                >
-                  Revenir en arrière
-                </Button>
-              </Link>
-            </Grid>
+        <Typography>
+          Veuillez confirmer le démarrage de la réunion suivante:
+        </Typography>
+        <Card variant="outlined" sx={{ p: 2, my: 2 }}>
+          <Typography variant="h6">{meeting.title}</Typography>
+        </Card>
+        <Grid container spacing={2} sx={{ pt: 2 }}>
+          <Grid item xs={12} sm={6}>
+            <ConfirmButton confirm={confirm} id={meetingId} />
           </Grid>
-        </Box>
+          <Grid item xs={12} sm={6}>
+            <Link href={'/meetings/' + meetingId}>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ width: '100%' }}
+              >
+                Revenir en arrière
+              </Button>
+            </Link>
+          </Grid>
+        </Grid>
       </Card>
     </ProtectedRoute>
   );

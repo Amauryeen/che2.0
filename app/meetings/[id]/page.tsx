@@ -221,6 +221,10 @@ export default async function Page({ params }: { params: { id: string } }) {
                     color="primary"
                     startIcon={<AddTaskIcon />}
                     sx={{ marginBottom: '10px' }}
+                    disabled={
+                      meeting.status !== 'planned' &&
+                      meeting.status !== 'started'
+                    }
                   >
                     Définir ma présence
                   </Button>
