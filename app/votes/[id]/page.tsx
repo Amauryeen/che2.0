@@ -193,7 +193,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     color="primary"
                     startIcon={<HowToVoteIcon />}
                     sx={{ marginBottom: '10px' }}
-                    disabled={meeting.status !== 'started'}
+                    disabled={vote.status !== 'started'}
                   >
                     Voter
                   </Button>

@@ -63,7 +63,7 @@ export default function Form(props: {
   return (
     <form onSubmit={handleSubmit(handleSave)}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={formValues.presence !== 'excused' ? 12 : 6}>
           <FormControl error={!!errors.presence} fullWidth>
             <Controller
               control={control}
@@ -112,74 +112,70 @@ export default function Form(props: {
             <FormHelperText>{errors.presence?.message}</FormHelperText>
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl error={!!errors.procurer} fullWidth>
-            <Controller
-              control={control}
-              name="procurer"
-              render={({ field: { value, onChange, ...fieldProps } }) => {
-                return (
-                  <>
-                    <InputLabel
-                      id="procurer"
-                      disabled={formValues.presence !== 'excused'}
-                    >
-                      Procureur
-                    </InputLabel>
-                    <Select
-                      {...fieldProps}
-                      labelId="procurer"
-                      value={value}
-                      label="Procureur"
-                      onChange={e => onChange(e.target.value)}
-                      disabled={formValues.presence !== 'excused'}
-                      renderValue={selected => (
-                        <Box
-                          sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}
-                        >
-                          <Chip
-                            key={selected}
-                            label={
-                              props.attendees.find(
-                                attendee => attendee.userId === selected,
-                              )?.user.firstName +
-                              ' ' +
-                              props.attendees.find(
-                                attendee => attendee.userId === selected,
-                              )?.user.lastName
-                            }
-                          />
-                        </Box>
-                      )}
-                    >
-                      {props.attendees
-                        .filter(
-                          attendee =>
-                            attendee.presence === 'present' &&
-                            attendee.userId !== props.attendee.userId &&
-                            !props.attendees.some(
-                              attendee2 =>
-                                attendee.userId === attendee2.procurerId,
-                            ),
-                        )
-                        .map((attendee: any) => (
-                          <MenuItem
-                            key={attendee.userId}
-                            value={attendee.userId}
+        {formValues.presence === 'excused' && (
+          <Grid item xs={12} sm={6}>
+            <FormControl error={!!errors.procurer} fullWidth>
+              <Controller
+                control={control}
+                name="procurer"
+                render={({ field: { value, onChange, ...fieldProps } }) => {
+                  return (
+                    <>
+                      <InputLabel id="procurer">Procureur</InputLabel>
+                      <Select
+                        {...fieldProps}
+                        labelId="procurer"
+                        value={value}
+                        label="Procureur"
+                        onChange={e => onChange(e.target.value)}
+                        renderValue={selected => (
+                          <Box
+                            sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}
                           >
-                            {attendee.user.firstName +
-                              ' ' +
-                              attendee.user.lastName}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </>
-                );
-              }}
-            />
-            <FormHelperText>{errors.procurer?.message}</FormHelperText>
-          </FormControl>
-        </Grid>
+                            <Chip
+                              key={selected}
+                              label={
+                                props.attendees.find(
+                                  attendee => attendee.userId === selected,
+                                )?.user.firstName +
+                                ' ' +
+                                props.attendees.find(
+                                  attendee => attendee.userId === selected,
+                                )?.user.lastName
+                              }
+                            />
+                          </Box>
+                        )}
+                      >
+                        {props.attendees
+                          .filter(
+                            attendee =>
+                              attendee.presence === 'present' &&
+                              attendee.userId !== props.attendee.userId &&
+                              !props.attendees.some(
+                                attendee2 =>
+                                  attendee.userId === attendee2.procurerId,
+                              ),
+                          )
+                          .map((attendee: any) => (
+                            <MenuItem
+                              key={attendee.userId}
+                              value={attendee.userId}
+                            >
+                              {attendee.user.firstName +
+                                ' ' +
+                                attendee.user.lastName}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </>
+                  );
+                }}
+              />
+              <FormHelperText>{errors.procurer?.message}</FormHelperText>
+            </FormControl>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Soumettre

@@ -226,7 +226,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                       meeting.status !== 'started'
                     }
                   >
-                    Définir ma présence
+                    Ma présence
                   </Button>
                 </Link>
               </Box>
