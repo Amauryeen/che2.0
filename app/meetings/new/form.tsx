@@ -3,7 +3,7 @@ import { Autocomplete, Button, Grid, TextField } from '@mui/material';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
-import { User, Document } from '@prisma/client';
+import { Document, User } from '@prisma/client';
 import { createMeeting } from '@/services/meetings';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';

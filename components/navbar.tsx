@@ -15,10 +15,12 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import EventIcon from '@mui/icons-material/Event';
 import MenuIcon from '@mui/icons-material/Menu';
-import LogoutIcon from '@mui/icons-material/Logout';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import PersonIcon from '@mui/icons-material/Person';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import FolderIcon from '@mui/icons-material/Folder';
+import InstallDesktopIcon from '@mui/icons-material/InstallDesktop';
+import BugReportIcon from '@mui/icons-material/BugReport';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
@@ -102,7 +104,6 @@ export default function ResponsiveDrawer(props: Props) {
         </ListItem>
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
-            <Divider />
             <Link href="/meetings">
               <ListItemButton>
                 <ListItemIcon>
@@ -127,7 +128,6 @@ export default function ResponsiveDrawer(props: Props) {
         </ListItem>
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
-            <Divider />
             <Link href="/users">
               <ListItemButton>
                 <ListItemIcon>
@@ -141,14 +141,40 @@ export default function ResponsiveDrawer(props: Props) {
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
             <Divider />
+            <Link href="/install">
+              <ListItemButton>
+                <ListItemIcon>
+                  <InstallDesktopIcon />
+                </ListItemIcon>
+                <ListItemText primary="Installer l'appli" />
+              </ListItemButton>
+            </Link>
+          </Box>
+        </ListItem>
+        <ListItem disablePadding>
+          <Box sx={{ width: '100%' }}>
+            <Link href="/bug">
+              <ListItemButton>
+                <ListItemIcon>
+                  <BugReportIcon />
+                </ListItemIcon>
+                <ListItemText primary="Signaler un bug" />
+              </ListItemButton>
+            </Link>
+          </Box>
+        </ListItem>
+        <ListItem disablePadding>
+          <Box sx={{ width: '100%' }}>
+            <Divider />
             <Link href="/signout">
               <ListItemButton>
                 <ListItemIcon>
-                  <LogoutIcon />
+                  <ExitToAppIcon />
                 </ListItemIcon>
                 <ListItemText primary="Déconnexion" />
               </ListItemButton>
             </Link>
+            <Divider />
           </Box>
         </ListItem>
       </List>

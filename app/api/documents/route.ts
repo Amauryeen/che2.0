@@ -17,7 +17,7 @@ export async function POST(request: Request): Promise<NextResponse> {
   const name = searchParams.get('name');
 
   const blob = await put(
-    `che2.0/${process.env.NODE_ENV === 'production' ? 'production' : 'preview'}/${name}`,
+    `che2.0/${process.env.NODE_ENV}/${name}`,
     request.body as any,
     {
       access: 'public',

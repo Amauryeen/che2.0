@@ -1,8 +1,8 @@
 'use server';
-import { auth } from '@/auth';
 import prisma from '@/lib/database';
 import { getRoles } from '@/services/roles';
 import { UserStatus } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
 export async function getUsers() {
   return prisma.user.findMany({
@@ -23,21 +23,6 @@ export async function getUserByEmail(email: string) {
     where: { email },
     include: { roles: { include: { role: true } } },
   });
-}
-
-export async function getCurrentUser() {
-  const session = await auth();
-
-  if (!session?.user?.email) throw Error('No user session found');
-
-  const user = await prisma.user.findUnique({
-    where: { email: session?.user?.email },
-    include: { roles: { include: { role: true } } },
-  });
-
-  if (!user) throw Error('User not found');
-
-  return user;
 }
 
 export async function createUser(data: {
@@ -64,6 +49,8 @@ export async function createUser(data: {
       roleId: roles.find(r => r.name === role)?.id ?? 0,
     })),
   });
+
+  revalidatePath('/');
 }
 
 export async function updateUser(
@@ -83,6 +70,7 @@ export async function updateUser(
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
+      updatedAt: new Date(),
     },
   });
 
@@ -96,4 +84,6 @@ export async function updateUser(
       roleId: roles.find(r => r.name === role)?.id ?? 0,
     })),
   });
+
+  revalidatePath('/');
 }

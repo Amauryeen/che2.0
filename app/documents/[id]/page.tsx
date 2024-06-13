@@ -130,7 +130,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 Télécharger le document
               </Button>
             </Link>
-            <Link href={'/documents/' + params.id + '/delete'}>
+            <Link href={'/documents/' + params.id + '/start'}>
               <Button
                 variant="outlined"
                 color="error"

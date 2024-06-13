@@ -1,6 +1,7 @@
 'use server';
 import prisma from '@/lib/database';
 import { getRoles } from './roles';
+import { revalidatePath } from 'next/cache';
 
 export async function getDocuments() {
   return prisma.document.findMany({
@@ -43,4 +44,14 @@ export async function createDocument(data: {
       roleId: roles.find(r => r.name === role)?.id ?? 0,
     })),
   });
+
+  revalidatePath('/');
+}
+
+export async function deleteDocument(id: number) {
+  await prisma.documentRole.deleteMany({ where: { documentId: id } });
+  await prisma.meetingDocument.deleteMany({ where: { documentId: id } });
+  await prisma.document.delete({ where: { id } });
+
+  revalidatePath('/');
 }

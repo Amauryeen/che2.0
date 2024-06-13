@@ -15,6 +15,7 @@ import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import Link from 'next/link';
 import { getMeetingById } from '@/services/meetings';
 
@@ -116,16 +117,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 Actions
               </Typography>
             </Box>
-            <Link href={'/meetings/' + params.id + '/cast'}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ marginBottom: '10px', width: '100%' }}
-              >
-                Voter
-              </Button>
-            </Link>
-            <Link href={'/meetings/' + params.id + '/edit'}>
+            <Link href={'/votes/' + params.id + '/edit'}>
               <Button
                 variant="outlined"
                 color="primary"
@@ -134,7 +126,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 Éditer le vote
               </Button>
             </Link>
-            <Link href={'/meetings/' + params.id + '/start'}>
+            <Link href={'/votes/' + params.id + '/start'}>
               <Button
                 variant="outlined"
                 color="success"
@@ -159,7 +151,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                 variant="outlined"
                 color="error"
                 sx={{ marginBottom: '10px', width: '100%' }}
-                disabled={vote.status !== 'planned'}
+                disabled={
+                  vote.status !== 'planned' && vote.status !== 'started'
+                }
               >
                 Annuler le vote
               </Button>
@@ -182,10 +176,31 @@ export default async function Page({ params }: { params: { id: string } }) {
                     (attendee: any) =>
                       !vote.users.some(
                         (user: any) => user.userId === attendee.userId,
+                      ) &&
+                      attendee.presence === 'present' &&
+                      attendee.user.roles.some(
+                        (role: any) =>
+                          !vote.roles.length ||
+                          vote.roles.some(
+                            (voteRole: any) => role.roleId === voteRole.roleId,
+                          ),
                       ),
                   ).length}
                 )
               </Typography>
+              <Box sx={{ flexGrow: 1, textAlign: 'right' }}>
+                <Link href={'/votes/' + params.id + '/cast'}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<HowToVoteIcon />}
+                    sx={{ marginBottom: '10px' }}
+                    disabled={vote.status !== 'started'}
+                  >
+                    Voter
+                  </Button>
+                </Link>
+              </Box>
             </Box>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={4}>
@@ -229,12 +244,21 @@ export default async function Page({ params }: { params: { id: string } }) {
                       color="text.secondary"
                       gutterBottom
                     >
-                      Inconnu/Abstention (
+                      Inconnus/Abstentions (
                       {!vote.anonymous || vote.status !== 'started'
                         ? meeting.attendees.filter(
                             (attendee: any) =>
                               !vote.users.some(
                                 (user: any) => user.userId === attendee.userId,
+                              ) &&
+                              attendee.presence === 'present' &&
+                              attendee.user.roles.some(
+                                (role: any) =>
+                                  !vote.roles.length ||
+                                  vote.roles.some(
+                                    (voteRole: any) =>
+                                      role.roleId === voteRole.roleId,
+                                  ),
                               ),
                           ).length + vote.votesAbstain
                         : '?'}
@@ -247,6 +271,14 @@ export default async function Page({ params }: { params: { id: string } }) {
                     (attendee: any) =>
                       !vote.users.some(
                         (user: any) => user.userId === attendee.userId,
+                      ) &&
+                      attendee.presence === 'present' &&
+                      attendee.user.roles.some(
+                        (role: any) =>
+                          !vote.roles.length ||
+                          vote.roles.some(
+                            (voteRole: any) => role.roleId === voteRole.roleId,
+                          ),
                       ),
                   ).length === 0
                     ? 'Vide.'
@@ -255,6 +287,15 @@ export default async function Page({ params }: { params: { id: string } }) {
                           (attendee: any) =>
                             !vote.users.some(
                               (user: any) => user.userId === attendee.userId,
+                            ) &&
+                            attendee.presence === 'present' &&
+                            attendee.user.roles.some(
+                              (role: any) =>
+                                !vote.roles.length ||
+                                vote.roles.some(
+                                  (voteRole: any) =>
+                                    role.roleId === voteRole.roleId,
+                                ),
                             ),
                         )
                         .map((user: any) => (
@@ -291,7 +332,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     >
                       Contre (
                       {!vote.anonymous || vote.status !== 'started'
-                        ? vote.votesFor
+                        ? vote.votesAgainst
                         : '?'}
                       )
                     </Typography>

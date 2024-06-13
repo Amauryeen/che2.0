@@ -6,7 +6,11 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "prettier"
+  ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
     "prettier/prettier": [

@@ -1,5 +1,5 @@
 'use server';
-import { Container, CircularProgress, Typography } from '@mui/material';
+import { CircularProgress, Container, Typography } from '@mui/material';
 
 export default async function Loading() {
   return (
