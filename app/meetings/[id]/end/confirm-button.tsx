@@ -16,14 +16,14 @@ export default function ConfirmButton(props: { confirm: any; id: number }) {
           loading: 'Fin en cours...',
           success: () => {
             router.push('/meetings/' + props.id);
-            return 'La réunion a été finie.';
+            return 'La réunion a été finie avec succès.';
           },
           error: "La réunion n'a pas pu être finie.",
         });
       }}
       sx={{ width: '100%' }}
     >
-      Mettre fin
+      Confirmer
     </Button>
   );
 }

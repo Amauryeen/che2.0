@@ -46,6 +46,33 @@ export async function createVote(data: {
   revalidatePath('/');
 }
 
+export async function startVote(id: number) {
+  await prisma.vote.update({
+    where: { id, status: 'planned' },
+    data: { status: 'started', updatedAt: new Date() },
+  });
+
+  revalidatePath('/');
+}
+
+export async function endVote(id: number) {
+  await prisma.vote.update({
+    where: { id, status: 'started' },
+    data: { status: 'ended', updatedAt: new Date() },
+  });
+
+  revalidatePath('/');
+}
+
+export async function cancelVote(id: number) {
+  await prisma.vote.update({
+    where: { id, OR: [{ status: 'planned' }, { status: 'started' }] },
+    data: { status: 'cancelled', updatedAt: new Date() },
+  });
+
+  revalidatePath('/');
+}
+
 export async function castVote(
   userId: number,
   voteId: number,

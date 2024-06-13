@@ -13,12 +13,12 @@ export default function ConfirmButton(props: { confirm: any; id: number }) {
       color="success"
       onClick={() => {
         toast.promise(props.confirm(), {
-          loading: 'Annulation en cours...',
+          loading: 'Fin en cours...',
           success: () => {
-            router.push('/meetings/' + props.id);
-            return 'La réunion a été annulée avec succès.';
+            router.push('/votes/' + props.id);
+            return 'Le vote a été fini avec succès.';
           },
-          error: "La réunion n'a pas pu être annulée.",
+          error: "Le vote n'a pas pu être fini.",
         });
       }}
       sx={{ width: '100%' }}

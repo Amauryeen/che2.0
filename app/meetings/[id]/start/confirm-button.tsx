@@ -16,14 +16,14 @@ export default function ConfirmButton(props: { confirm: any; id: number }) {
           loading: 'Démarrage en cours...',
           success: () => {
             router.push('/meetings/' + props.id);
-            return 'La réunion a été démarrée.';
+            return 'La réunion a été démarrée avec succès.';
           },
           error: "La réunion n'a pas pu être démarrée.",
         });
       }}
       sx={{ width: '100%' }}
     >
-      Démarrer
+      Confirmer
     </Button>
   );
 }

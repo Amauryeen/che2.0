@@ -76,7 +76,7 @@ export async function endMeeting(id: number) {
 
 export async function cancelMeeting(id: number) {
   await prisma.meeting.update({
-    where: { id, status: 'planned' },
+    where: { id, OR: [{ status: 'planned' }, { status: 'started' }] },
     data: { status: 'cancelled', updatedAt: new Date() },
   });
 

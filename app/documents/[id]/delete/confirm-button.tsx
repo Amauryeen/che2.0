@@ -10,7 +10,7 @@ export default function ConfirmButton(props: { confirm: any }) {
   return (
     <Button
       variant="contained"
-      color="error"
+      color="success"
       onClick={() => {
         toast.promise(props.confirm(), {
           loading: 'Suppression en cours...',
@@ -23,7 +23,7 @@ export default function ConfirmButton(props: { confirm: any }) {
       }}
       sx={{ width: '100%' }}
     >
-      Supprimer
+      Confirmer
     </Button>
   );
 }

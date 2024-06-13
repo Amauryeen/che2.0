@@ -15,10 +15,10 @@ export default function ConfirmButton(props: { confirm: any; id: number }) {
         toast.promise(props.confirm(), {
           loading: 'Annulation en cours...',
           success: () => {
-            router.push('/meetings/' + props.id);
-            return 'La réunion a été annulée avec succès.';
+            router.push('/votes/' + props.id);
+            return 'Le vote a été annulé avec succès.';
           },
-          error: "La réunion n'a pas pu être annulée.",
+          error: "Le vote n'a pas pu être annulé.",
         });
       }}
       sx={{ width: '100%' }}

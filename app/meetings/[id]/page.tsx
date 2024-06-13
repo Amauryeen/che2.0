@@ -168,7 +168,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                 variant="outlined"
                 color="error"
                 sx={{ marginBottom: '10px', width: '100%' }}
-                disabled={meeting.status !== 'planned'}
+                disabled={
+                  meeting.status !== 'planned' && meeting.status !== 'started'
+                }
               >
                 Annuler la réunion
               </Button>

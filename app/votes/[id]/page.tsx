@@ -117,7 +117,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 Actions
               </Typography>
             </Box>
-            <Link href={'/meetings/' + params.id + '/edit'}>
+            <Link href={'/votes/' + params.id + '/edit'}>
               <Button
                 variant="outlined"
                 color="primary"
@@ -126,7 +126,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 Éditer le vote
               </Button>
             </Link>
-            <Link href={'/meetings/' + params.id + '/start'}>
+            <Link href={'/votes/' + params.id + '/start'}>
               <Button
                 variant="outlined"
                 color="success"
@@ -151,7 +151,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                 variant="outlined"
                 color="error"
                 sx={{ marginBottom: '10px', width: '100%' }}
-                disabled={vote.status !== 'planned'}
+                disabled={
+                  vote.status !== 'planned' && vote.status !== 'started'
+                }
               >
                 Annuler le vote
               </Button>
