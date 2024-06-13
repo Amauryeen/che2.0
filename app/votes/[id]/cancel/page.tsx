@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           </Typography>
         </Box>
         <Typography>
-          Veuillez confirmer l'annulation du vote suivant:
+          Veuillez confirmer l&apos;annulation du vote suivant:
         </Typography>
         <Card variant="outlined" sx={{ p: 2, my: 2 }}>
           <Typography variant="h6">{vote.title}</Typography>
