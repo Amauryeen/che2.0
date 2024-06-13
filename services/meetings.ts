@@ -1,6 +1,7 @@
 'use server';
 import prisma from '@/lib/database';
 import { MeetingPresence } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
 export async function getMeetings() {
   return prisma.meeting.findMany({
@@ -51,6 +52,8 @@ export async function createMeeting(data: {
       },
     },
   });
+
+  revalidatePath('/');
 }
 
 export async function startMeeting(id: number) {
@@ -58,6 +61,8 @@ export async function startMeeting(id: number) {
     where: { id, status: 'planned' },
     data: { status: 'started', updatedAt: new Date() },
   });
+
+  revalidatePath('/');
 }
 
 export async function endMeeting(id: number) {
@@ -65,6 +70,8 @@ export async function endMeeting(id: number) {
     where: { id, status: 'started' },
     data: { status: 'ended', updatedAt: new Date() },
   });
+
+  revalidatePath('/');
 }
 
 export async function cancelMeeting(id: number) {
@@ -72,13 +79,8 @@ export async function cancelMeeting(id: number) {
     where: { id, status: 'planned' },
     data: { status: 'cancelled', updatedAt: new Date() },
   });
-}
 
-export async function getMeetingAttendees(id: number) {
-  return prisma.meetingAttendee.findMany({
-    where: { meetingId: id },
-    include: { user: { include: { roles: true } } },
-  });
+  revalidatePath('/');
 }
 
 export async function setMeetingPresence(
@@ -96,4 +98,6 @@ export async function setMeetingPresence(
       updatedAt: new Date(),
     },
   });
+
+  revalidatePath('/');
 }

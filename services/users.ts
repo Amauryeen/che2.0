@@ -3,6 +3,7 @@ import { auth } from '@/auth';
 import prisma from '@/lib/database';
 import { getRoles } from '@/services/roles';
 import { UserStatus } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
 export async function getUsers() {
   return prisma.user.findMany({
@@ -64,6 +65,8 @@ export async function createUser(data: {
       roleId: roles.find(r => r.name === role)?.id ?? 0,
     })),
   });
+
+  revalidatePath('/');
 }
 
 export async function updateUser(
@@ -96,4 +99,6 @@ export async function updateUser(
       roleId: roles.find(r => r.name === role)?.id ?? 0,
     })),
   });
+
+  revalidatePath('/');
 }

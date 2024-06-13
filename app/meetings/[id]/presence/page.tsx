@@ -1,6 +1,6 @@
 'use server';
 
-import { getMeetingAttendees, getMeetingById } from '@/services/meetings';
+import { getMeetingById } from '@/services/meetings';
 import NotFound from '@/components/errors/not-found';
 import { auth } from '@/auth';
 import { Box, Card, Typography } from '@mui/material';
@@ -17,8 +17,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     return <NotFound />;
 
   const session = await auth();
-  const attendees = await getMeetingAttendees(meetingId);
-  const attendee = attendees.find(
+  const attendee = meeting.attendees.find(
     (attendee: any) => attendee.userId === session?.user.id,
   );
 
@@ -37,7 +36,11 @@ export default async function Page({ params }: { params: { id: string } }) {
       <Card variant="outlined" sx={{ p: 2, my: 2 }}>
         <Typography variant="h6">{meeting.title}</Typography>
       </Card>
-      <Form meeting={meeting} attendee={attendee} attendees={attendees} />
+      <Form
+        meeting={meeting}
+        attendee={attendee}
+        attendees={meeting.attendees}
+      />
     </Card>
   );
 }

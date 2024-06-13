@@ -2,6 +2,7 @@
 import prisma from '@/lib/database';
 import { getRoles } from './roles';
 import { VoteValue } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
 export async function getVotes() {
   return prisma.vote.findMany({
@@ -41,6 +42,8 @@ export async function createVote(data: {
       roleId: roles.find(r => r.name === role)?.id ?? 0,
     })),
   });
+
+  revalidatePath('/');
 }
 
 export async function castVote(
@@ -102,4 +105,6 @@ export async function castVote(
       },
     });
   }
+
+  revalidatePath('/');
 }
