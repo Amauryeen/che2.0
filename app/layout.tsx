@@ -2,7 +2,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import './globals.css';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import Navbar from '@/components/navbar';
-import { auth } from '@/auth';
+import { auth, signIn } from '@/auth';
 import Unauthenticated from '@/components/errors/unauthenticated';
 import { Metadata, Viewport } from 'next';
 import theme from '@/app/theme';
@@ -29,6 +29,11 @@ export default async function RootLayout({
 }) {
   const session = await auth();
 
+  async function logIn() {
+    'use server';
+    await signIn('azure-ad');
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -45,7 +50,7 @@ export default async function RootLayout({
                 {children}
               </Navbar>
             ) : (
-              <Unauthenticated />
+              <Unauthenticated logIn={logIn} />
             )}
             <Toaster
               position="bottom-right"
