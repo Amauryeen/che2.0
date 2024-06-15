@@ -21,11 +21,11 @@ export default function Table(props: { meetings: Meeting[] }) {
       minWidth: 250,
       flex: 1,
       renderCell: (params: GridRenderCellParams) => {
-        const date = new Date(params.row.startTime);
         return new Intl.DateTimeFormat('fr-FR', {
           dateStyle: 'full',
           timeStyle: 'short',
-        }).format(date);
+          timeZone: 'Europe/Brussels',
+        }).format(new Date(params.row.startTime));
       },
     },
     {
@@ -34,11 +34,11 @@ export default function Table(props: { meetings: Meeting[] }) {
       minWidth: 250,
       flex: 1,
       renderCell: (params: GridRenderCellParams) => {
-        const date = new Date(params.row.endTime);
         return new Intl.DateTimeFormat('fr-FR', {
           dateStyle: 'full',
           timeStyle: 'short',
-        }).format(date);
+          timeZone: 'Europe/Brussels',
+        }).format(new Date(params.row.endTime));
       },
     },
     {

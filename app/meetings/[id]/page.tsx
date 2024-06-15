@@ -89,14 +89,16 @@ export default async function Page({ params }: { params: { id: string } }) {
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(meeting.startTime)}
+                timeZone: 'Europe/Brussels',
+              }).format(new Date(meeting.startTime))}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Fin:</strong>{' '}
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(meeting.endTime)}
+                timeZone: 'Europe/Brussels',
+              }).format(new Date(meeting.endTime))}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Lieu:</strong> {meeting.location}
@@ -112,14 +114,16 @@ export default async function Page({ params }: { params: { id: string } }) {
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(meeting.createdAt)}
+                timeZone: 'Europe/Brussels',
+              }).format(new Date(meeting.createdAt))}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Date de modification:</strong>{' '}
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(meeting.updatedAt)}
+                timeZone: 'Europe/Brussels',
+              }).format(new Date(meeting.updatedAt))}
             </Typography>
           </Card>
         </Grid>
