@@ -87,14 +87,14 @@ export default async function Page({ params }: { params: { id: string } }) {
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(document.createdAt)}
+              }).format(new Date(document.createdAt))}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Date de modification:</strong>{' '}
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(document.updatedAt)}
+              }).format(new Date(document.updatedAt))}
             </Typography>
           </Card>
         </Grid>

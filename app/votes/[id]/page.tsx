@@ -95,14 +95,14 @@ export default async function Page({ params }: { params: { id: string } }) {
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(vote.createdAt)}
+              }).format(new Date(vote.createdAt))}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Date de modification:</strong>{' '}
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
-              }).format(vote.updatedAt)}
+              }).format(new Date(vote.updatedAt))}
             </Typography>
           </Card>
         </Grid>
@@ -177,7 +177,8 @@ export default async function Page({ params }: { params: { id: string } }) {
                       !vote.users.some(
                         (user: any) => user.userId === attendee.userId,
                       ) &&
-                      attendee.presence === 'present' &&
+                      (attendee.presence === 'present' ||
+                        attendee.presence === 'excused') &&
                       attendee.user.roles.some(
                         (role: any) =>
                           !vote.roles.length ||
@@ -251,7 +252,8 @@ export default async function Page({ params }: { params: { id: string } }) {
                               !vote.users.some(
                                 (user: any) => user.userId === attendee.userId,
                               ) &&
-                              attendee.presence === 'present' &&
+                              (attendee.presence === 'present' ||
+                                attendee.presence === 'excused') &&
                               attendee.user.roles.some(
                                 (role: any) =>
                                   !vote.roles.length ||
@@ -272,7 +274,8 @@ export default async function Page({ params }: { params: { id: string } }) {
                       !vote.users.some(
                         (user: any) => user.userId === attendee.userId,
                       ) &&
-                      attendee.presence === 'present' &&
+                      (attendee.presence === 'present' ||
+                        attendee.presence === 'excused') &&
                       attendee.user.roles.some(
                         (role: any) =>
                           !vote.roles.length ||
@@ -288,7 +291,8 @@ export default async function Page({ params }: { params: { id: string } }) {
                             !vote.users.some(
                               (user: any) => user.userId === attendee.userId,
                             ) &&
-                            attendee.presence === 'present' &&
+                            (attendee.presence === 'present' ||
+                              attendee.presence === 'excused') &&
                             attendee.user.roles.some(
                               (role: any) =>
                                 !vote.roles.length ||
