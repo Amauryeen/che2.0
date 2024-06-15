@@ -24,6 +24,7 @@ export default function Table(props: { meetings: Meeting[] }) {
         return new Intl.DateTimeFormat('fr-FR', {
           dateStyle: 'full',
           timeStyle: 'short',
+          timeZone: 'Europe/Brussels',
         }).format(new Date(params.row.startTime));
       },
     },
@@ -36,6 +37,7 @@ export default function Table(props: { meetings: Meeting[] }) {
         return new Intl.DateTimeFormat('fr-FR', {
           dateStyle: 'full',
           timeStyle: 'short',
+          timeZone: 'Europe/Brussels',
         }).format(new Date(params.row.endTime));
       },
     },

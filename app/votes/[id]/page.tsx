@@ -95,6 +95,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
+                timeZone: 'Europe/Brussels',
               }).format(new Date(vote.createdAt))}
             </Typography>
             <Typography variant="body1" gutterBottom>
@@ -102,6 +103,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',
                 timeStyle: 'short',
+                timeZone: 'Europe/Brussels',
               }).format(new Date(vote.updatedAt))}
             </Typography>
           </Card>
