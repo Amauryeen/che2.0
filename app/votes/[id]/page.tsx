@@ -133,7 +133,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                 variant="outlined"
                 color="success"
                 sx={{ marginBottom: '10px', width: '100%' }}
-                disabled={vote.status !== 'planned'}
+                disabled={
+                  vote.status !== 'planned' || vote.meeting.status !== 'started'
+                }
               >
                 Démarrer le vote
               </Button>

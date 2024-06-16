@@ -2,6 +2,7 @@
 import prisma from '@/lib/database';
 import { getRoles } from './roles';
 import { revalidatePath } from 'next/cache';
+import { DocumentStatus } from '@prisma/client';
 
 export async function getDocuments() {
   return prisma.document.findMany({
@@ -52,6 +53,39 @@ export async function deleteDocument(id: number) {
   await prisma.documentRole.deleteMany({ where: { documentId: id } });
   await prisma.meetingDocument.deleteMany({ where: { documentId: id } });
   await prisma.document.delete({ where: { id } });
+
+  revalidatePath('/');
+}
+
+export async function updateDocument(
+  id: number,
+  data: {
+    status: DocumentStatus;
+    title: string;
+    description: string;
+    roles: string[];
+  },
+) {
+  await prisma.document.update({
+    where: { id },
+    data: {
+      status: data.status,
+      title: data.title,
+      description: data.description,
+      updatedAt: new Date(),
+    },
+  });
+
+  const roles = await getRoles();
+
+  await prisma.documentRole.deleteMany({ where: { documentId: id } });
+
+  await prisma.documentRole.createMany({
+    data: data.roles.map(role => ({
+      documentId: id,
+      roleId: roles.find(r => r.name === role)?.id ?? 0,
+    })),
+  });
 
   revalidatePath('/');
 }

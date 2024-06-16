@@ -7,7 +7,7 @@ import { revalidatePath } from 'next/cache';
 export async function getUsers() {
   return prisma.user.findMany({
     include: { roles: { include: { role: true } } },
-    orderBy: [{ status: 'asc' }, { createdAt: 'asc' }],
+    orderBy: [{ status: 'asc' }, { createdAt: 'desc' }],
   });
 }
 
