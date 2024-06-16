@@ -14,7 +14,10 @@ export async function getMeetingById(id: number) {
     where: { id },
     include: {
       attendees: {
-        include: { user: { include: { roles: { include: { role: true } } } } },
+        include: {
+          user: { include: { roles: { include: { role: true } } } },
+          procurer: true,
+        },
       },
       documents: { include: { document: true } },
     },
@@ -106,7 +109,15 @@ export async function setMeetingPresence(
     procurer: number | null;
   },
 ) {
-  await prisma.meetingAttendee.update({
+  if (data.presence === 'excused' && data.procurer) {
+    const user = await prisma.meetingAttendee.findFirst({
+      where: { procurerId: data.procurer },
+    });
+
+    if (user) throw Error();
+  }
+
+  const meetingAttendee = await prisma.meetingAttendee.update({
     where: { id },
     data: {
       presence: data.presence,
@@ -114,6 +125,19 @@ export async function setMeetingPresence(
       updatedAt: new Date(),
     },
   });
+
+  if (data.presence !== 'present') {
+    await prisma.meetingAttendee.updateMany({
+      where: {
+        meetingId: meetingAttendee.meetingId,
+        procurerId: meetingAttendee.userId,
+      },
+      data: {
+        procurerId: null,
+        presence: 'unknown',
+      },
+    });
+  }
 
   revalidatePath('/');
 }
@@ -166,7 +190,6 @@ export async function updateMeeting(
     },
   });
 
-  // also remove the attendee from anybody's 'procurer'
   await prisma.meetingAttendee.updateMany({
     where: {
       meetingId: id,

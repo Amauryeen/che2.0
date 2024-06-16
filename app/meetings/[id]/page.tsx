@@ -349,7 +349,12 @@ export default async function Page({ params }: { params: { id: string } }) {
                             label={
                               attendee.user.firstName +
                               ' ' +
-                              attendee.user.lastName
+                              attendee.user.lastName +
+                              ' (procuration à ' +
+                              attendee.procurer.firstName +
+                              ' ' +
+                              attendee.procurer.lastName +
+                              ')'
                             }
                             color="error"
                             variant="outlined"
