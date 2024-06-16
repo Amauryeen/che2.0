@@ -7,6 +7,7 @@ export default async () => {
     const withSerwist = (await import("@serwist/next")).default({
       swSrc: "app/sw.ts",
       swDest: "public/sw.js",
+      cacheOnNavigation: true,
       register: false,
       reloadOnOnline: true,
     });
