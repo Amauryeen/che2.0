@@ -20,7 +20,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import FolderIcon from '@mui/icons-material/Folder';
 import InstallDesktopIcon from '@mui/icons-material/InstallDesktop';
-import BugReportIcon from '@mui/icons-material/BugReport';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
@@ -92,6 +91,19 @@ export default function ResponsiveDrawer(props: Props) {
         </ListItem>
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
+            <Link href="/install">
+              <ListItemButton>
+                <ListItemIcon>
+                  <InstallDesktopIcon />
+                </ListItemIcon>
+                <ListItemText primary="Installer" />
+              </ListItemButton>
+            </Link>
+          </Box>
+        </ListItem>
+        <ListItem disablePadding>
+          <Box sx={{ width: '100%' }}>
+            <Divider />
             <Link href="/documents">
               <ListItemButton>
                 <ListItemIcon>
@@ -134,31 +146,6 @@ export default function ResponsiveDrawer(props: Props) {
                   <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary="Utilisateurs" />
-              </ListItemButton>
-            </Link>
-          </Box>
-        </ListItem>
-        <ListItem disablePadding>
-          <Box sx={{ width: '100%' }}>
-            <Divider />
-            <Link href="/install">
-              <ListItemButton>
-                <ListItemIcon>
-                  <InstallDesktopIcon />
-                </ListItemIcon>
-                <ListItemText primary="Installer l'appli" />
-              </ListItemButton>
-            </Link>
-          </Box>
-        </ListItem>
-        <ListItem disablePadding>
-          <Box sx={{ width: '100%' }}>
-            <Link href="/bug">
-              <ListItemButton>
-                <ListItemIcon>
-                  <BugReportIcon />
-                </ListItemIcon>
-                <ListItemText primary="Signaler un bug" />
               </ListItemButton>
             </Link>
           </Box>
