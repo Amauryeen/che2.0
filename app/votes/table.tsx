@@ -13,20 +13,16 @@ import { Chip } from '@mui/material';
 
 export default function Table(props: { votes: Vote[] }) {
   const columns = [
-    { field: 'id', headerName: 'ID', minWidth: 75, flex: 1 },
-    { field: 'title', headerName: 'Titre', minWidth: 150, flex: 1 },
+    { field: 'id', headerName: 'ID' },
+    { field: 'title', headerName: 'Titre' },
     {
       field: 'meeting',
       headerName: 'Réunion',
-      minWidth: 150,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => params.row.meeting.title,
     },
     {
       field: 'roles',
       headerName: 'Rôles requis',
-      minWidth: 400,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => {
         return params.row.roles.map((role: any) => (
           <Chip
@@ -41,8 +37,6 @@ export default function Table(props: { votes: Vote[] }) {
     {
       field: 'status',
       headerName: 'Statut',
-      minWidth: 100,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => {
         switch (params.row.status) {
           case 'started':
@@ -87,8 +81,6 @@ export default function Table(props: { votes: Vote[] }) {
     {
       field: 'actions',
       headerName: 'Actions',
-      minWidth: 150,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
           <Link href={`/votes/${params.row.id}`}>
@@ -128,6 +120,13 @@ export default function Table(props: { votes: Vote[] }) {
         },
       }}
       disableRowSelectionOnClick
+      autosizeOnMount={true}
+      autosizeOptions={{
+        includeHeaders: true,
+        includeOutliers: true,
+        outliersFactor: 1.5,
+        expand: true,
+      }}
     />
   );
 }

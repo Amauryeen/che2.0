@@ -13,13 +13,11 @@ import { Chip } from '@mui/material';
 
 export default function Table(props: { meetings: Meeting[] }) {
   const columns = [
-    { field: 'id', headerName: 'ID', minWidth: 75, flex: 1 },
-    { field: 'title', headerName: 'Titre', minWidth: 150, flex: 1 },
+    { field: 'id', headerName: 'ID' },
+    { field: 'title', headerName: 'Titre' },
     {
       field: 'startTime',
       headerName: 'Début',
-      minWidth: 250,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => {
         return new Intl.DateTimeFormat('fr-FR', {
           dateStyle: 'full',
@@ -31,8 +29,6 @@ export default function Table(props: { meetings: Meeting[] }) {
     {
       field: 'endTime',
       headerName: 'Fin',
-      minWidth: 250,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => {
         return new Intl.DateTimeFormat('fr-FR', {
           dateStyle: 'full',
@@ -44,8 +40,6 @@ export default function Table(props: { meetings: Meeting[] }) {
     {
       field: 'status',
       headerName: 'Statut',
-      minWidth: 100,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => {
         switch (params.row.status) {
           case 'started':
@@ -90,8 +84,6 @@ export default function Table(props: { meetings: Meeting[] }) {
     {
       field: 'actions',
       headerName: 'Actions',
-      minWidth: 150,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
           <Link href={`/meetings/${params.row.id}`}>
@@ -131,6 +123,13 @@ export default function Table(props: { meetings: Meeting[] }) {
         },
       }}
       disableRowSelectionOnClick
+      autosizeOnMount={true}
+      autosizeOptions={{
+        includeHeaders: true,
+        includeOutliers: true,
+        outliersFactor: 1.5,
+        expand: true,
+      }}
     />
   );
 }

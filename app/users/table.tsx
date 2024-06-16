@@ -11,15 +11,13 @@ import { Chip } from '@mui/material';
 
 export default function Table(props: { users: User[] }) {
   const columns = [
-    { field: 'id', headerName: 'ID', minWidth: 75, flex: 1 },
-    { field: 'lastName', headerName: 'Nom', minWidth: 200, flex: 1 },
-    { field: 'firstName', headerName: 'Prénom', minWidth: 200, flex: 1 },
-    { field: 'email', headerName: 'E-mail', minWidth: 300, flex: 1 },
+    { field: 'id', headerName: 'ID' },
+    { field: 'lastName', headerName: 'Nom' },
+    { field: 'firstName', headerName: 'Prénom' },
+    { field: 'email', headerName: 'E-mail' },
     {
       field: 'roles',
       headerName: 'Rôles',
-      minWidth: 400,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => {
         return params.row.roles.map((role: any) => (
           <Chip
@@ -56,8 +54,6 @@ export default function Table(props: { users: User[] }) {
     {
       field: 'actions',
       headerName: 'Actions',
-      minWidth: 150,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
           <Link href={`/users/${params.row.id}`}>
@@ -97,6 +93,13 @@ export default function Table(props: { users: User[] }) {
         },
       }}
       disableRowSelectionOnClick
+      autosizeOnMount={true}
+      autosizeOptions={{
+        includeHeaders: true,
+        includeOutliers: true,
+        outliersFactor: 1.5,
+        expand: true,
+      }}
     />
   );
 }
