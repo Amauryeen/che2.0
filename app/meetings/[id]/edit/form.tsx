@@ -8,6 +8,7 @@ import {
   Meeting,
   MeetingAttendee,
   User,
+  Document,
 } from '@prisma/client';
 import { updateMeeting } from '@/services/meetings';
 import toast from 'react-hot-toast';
