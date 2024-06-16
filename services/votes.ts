@@ -17,6 +17,7 @@ export async function getVoteById(id: number) {
     include: {
       roles: { include: { role: true } },
       users: { include: { user: true } },
+      meeting: true,
     },
   });
 }

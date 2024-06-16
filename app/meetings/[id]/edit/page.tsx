@@ -1,16 +1,29 @@
 'use server';
+import { Card, Typography } from '@mui/material';
+import Form from './form';
+import ProtectedRoute from '@/components/protected-route';
+import { getUsers } from '@/services/users';
+import { getDocuments } from '@/services/documents';
+import { getMeetingById } from '@/services/meetings';
+import NotFound from '@/components/errors/not-found';
 
-import { Box, Card, Typography } from '@mui/material';
+export default async function Page({ params }: { params: { id: string } }) {
+  const meetingId = parseInt(params.id);
+  const meeting: any = await getMeetingById(meetingId);
 
-export default async function Page() {
+  if (!meeting) return <NotFound />;
+
+  const users = await getUsers();
+  const documents = await getDocuments();
+
   return (
-    <Card variant="outlined" sx={{ p: 2 }}>
-      <Box sx={{ display: 'flex' }}>
+    <ProtectedRoute authorizedRoles={['Gestionnaire']}>
+      <Card variant="outlined" sx={{ p: 2 }}>
         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-          Éditer la réunion
+          Éditer une réunion
         </Typography>
-      </Box>
-      Fonctionnalité indisponible, pour le moment...
-    </Card>
+        <Form users={users} documents={documents} meeting={meeting} />
+      </Card>
+    </ProtectedRoute>
   );
 }

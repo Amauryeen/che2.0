@@ -1,6 +1,7 @@
 'use server';
 
 import { Box, Card, Typography } from '@mui/material';
+import Image from 'next/image';
 
 export default async function Page() {
   return (
@@ -10,7 +11,24 @@ export default async function Page() {
           Installer l&apos;application
         </Typography>
       </Box>
-      Fonctionnalité indisponible, pour le moment...
+      Il est possible d'installer CHE2.0 directement sur votre ordinateur (et
+      votre téléphone portable). Pour le faire sur ordinateur, munissez-vous
+      d'un navigateur Chromium (Google Chrome, Microsoft Edge, Brave, etc.) et
+      suivez les étapes suivantes :
+      <ol>
+        <li>
+          - Cliquez sur le carré avec un "+" dans votre barre de recherche
+        </li>
+        <li>- Cliquez sur "Installer"</li>
+      </ol>
+      <br />
+      Voici un exemple de ce que vous devriez voir :
+      <Image
+        src={'/install_chromium.png'}
+        alt={'Installer sur Chromium'}
+        width={2000}
+        height={2000}
+      />
     </Card>
   );
 }

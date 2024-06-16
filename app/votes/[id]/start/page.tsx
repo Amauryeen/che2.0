@@ -12,7 +12,8 @@ export default async function Page({ params }: { params: { id: string } }) {
   const voteId = parseInt(params.id);
   const vote: any = await getVoteById(voteId);
 
-  if (!vote || vote.status !== 'planned') return <NotFound />;
+  if (!vote || vote.status !== 'planned' || vote.meeting.status !== 'started')
+    return <NotFound />;
 
   async function confirm() {
     'use server';
