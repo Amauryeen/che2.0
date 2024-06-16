@@ -90,7 +90,7 @@ export default function Form(props: {
     toast.promise(updateUser(props.user.id, formValues), {
       loading: 'Modification en cours...',
       success: () => {
-        router.push('/users');
+        router.push('/users/' + props.user.id);
         return <>L&apos;utilisateur a été mis à jour avec succès.</>;
       },
       error: <>L&apos;utilisateur n&apos;a pas pu être mis à jour.</>,
