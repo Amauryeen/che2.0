@@ -1,6 +1,6 @@
 'use server';
 import prisma from '@/lib/database';
-import { DocumentStatus, MeetingPresence } from '@prisma/client';
+import { MeetingPresence } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
 export async function getMeetings() {

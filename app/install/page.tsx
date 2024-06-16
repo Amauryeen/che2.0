@@ -11,15 +11,16 @@ export default async function Page() {
           Installer l&apos;application
         </Typography>
       </Box>
-      Il est possible d'installer CHE2.0 directement sur votre ordinateur (et
-      votre téléphone portable). Pour le faire sur ordinateur, munissez-vous
-      d'un navigateur Chromium (Google Chrome, Microsoft Edge, Brave, etc.) et
-      suivez les étapes suivantes :
+      Il est possible d&apos;installer CHE2.0 directement sur votre ordinateur
+      (et votre téléphone portable). Pour le faire sur ordinateur, munissez-vous
+      d&apos;un navigateur Chromium (Google Chrome, Microsoft Edge, Brave, etc.)
+      et suivez les étapes suivantes :
       <ol>
         <li>
-          - Cliquez sur le carré avec un "+" dans votre barre de recherche
+          - Cliquez sur le carré avec un &quot;+&quot; dans votre barre de
+          recherche
         </li>
-        <li>- Cliquez sur "Installer"</li>
+        <li>- Cliquez sur &quot;Installer&quot;</li>
       </ol>
       <br />
       Voici un exemple de ce que vous devriez voir :
