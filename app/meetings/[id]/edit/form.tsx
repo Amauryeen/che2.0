@@ -96,7 +96,7 @@ export default function Form(props: {
     toast.promise(updateMeeting(props.meeting.id, formValues), {
       loading: 'Modification en cours...',
       success: () => {
-        router.push('/meetings');
+        router.push('/meetings/' + props.meeting.id);
         return <>La réunion a été mise à jour avec succès.</>;
       },
       error: <>La réunion n&apos;a pas pu être mise à jour.</>,

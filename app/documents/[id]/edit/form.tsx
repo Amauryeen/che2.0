@@ -47,7 +47,7 @@ export default function Form(props: {
     toast.promise(updateDocument(props.document.id, formValues), {
       loading: 'Modification en cours...',
       success: () => {
-        router.push('/documents');
+        router.push('/documents/' + props.document.id);
         return <>Le document a été mis à jour avec succès.</>;
       },
       error: <>Le document n&apos;a pas pu être mis à jour.</>,

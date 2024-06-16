@@ -58,7 +58,7 @@ export default function Form(props: {
     toast.promise(updateVote(props.vote.id, formValues), {
       loading: 'Modification en cours...',
       success: () => {
-        router.push('/votes');
+        router.push('/votes/' + props.vote.id);
         return <>Le vote a été modifié avec succès.</>;
       },
       error: <>Le vote n&apos;a pas pu être modifié.</>,
