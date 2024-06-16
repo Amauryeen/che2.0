@@ -10,7 +10,7 @@ export default async function Page() {
           Éditer la réunion
         </Typography>
       </Box>
-      Bientôt...
+      Fonctionnalité indisponible, pour le moment...
     </Card>
   );
 }

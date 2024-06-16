@@ -14,7 +14,10 @@ export async function getVotes() {
 export async function getVoteById(id: number) {
   return prisma.vote.findUnique({
     where: { id },
-    include: { roles: true, users: { include: { user: true } } },
+    include: {
+      roles: { include: { role: true } },
+      users: { include: { user: true } },
+    },
   });
 }
 
@@ -132,6 +135,40 @@ export async function castVote(
       },
     });
   }
+
+  revalidatePath('/');
+}
+
+export async function updateVote(
+  id: number,
+  data: {
+    title: string;
+    description: string;
+    roles: string[];
+    meeting: number;
+    anonymous: boolean;
+  },
+) {
+  await prisma.vote.update({
+    where: { id },
+    data: {
+      title: data.title,
+      description: data.description,
+      meetingId: data.meeting,
+      anonymous: data.anonymous,
+    },
+  });
+
+  const roles = await getRoles();
+
+  await prisma.voteRole.deleteMany({ where: { voteId: id } });
+
+  await prisma.voteRole.createMany({
+    data: data.roles.map(role => ({
+      voteId: id,
+      roleId: roles.find(r => r.name === role)?.id ?? 0,
+    })),
+  });
 
   revalidatePath('/');
 }

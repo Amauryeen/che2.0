@@ -10,7 +10,7 @@ export default async function Page() {
           Installer l&apos;application
         </Typography>
       </Box>
-      Bientôt...
+      Fonctionnalité indisponible, pour le moment...
     </Card>
   );
 }

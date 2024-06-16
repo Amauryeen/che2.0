@@ -10,7 +10,7 @@ export default async function Page() {
           Signaler un bug
         </Typography>
       </Box>
-      Bientôt...
+      Fonctionnalité indisponible, pour le moment...
     </Card>
   );
 }
