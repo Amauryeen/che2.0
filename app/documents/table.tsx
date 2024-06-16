@@ -14,14 +14,12 @@ import { Chip } from '@mui/material';
 
 export default function Table(props: { documents: Document[] }) {
   const columns = [
-    { field: 'id', headerName: 'ID', minWidth: 75, flex: 1 },
-    { field: 'title', headerName: 'Titre', minWidth: 200, flex: 1 },
-    { field: 'type', headerName: 'Type', minWidth: 200, flex: 1 },
+    { field: 'id', headerName: 'ID' },
+    { field: 'title', headerName: 'Titre' },
+    { field: 'type', headerName: 'Type' },
     {
       field: 'roles',
       headerName: 'Rôles requis',
-      minWidth: 400,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => {
         return params.row.roles.map((role: any) => (
           <Chip
@@ -36,8 +34,6 @@ export default function Table(props: { documents: Document[] }) {
     {
       field: 'status',
       headerName: 'Statut',
-      minWidth: 150,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => {
         switch (params.row.status) {
           case 'pinned':
@@ -73,8 +69,6 @@ export default function Table(props: { documents: Document[] }) {
     {
       field: 'actions',
       headerName: 'Actions',
-      minWidth: 150,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
           <Link href={`/documents/${params.row.id}`}>
@@ -124,6 +118,13 @@ export default function Table(props: { documents: Document[] }) {
         },
       }}
       disableRowSelectionOnClick
+      autosizeOnMount={true}
+      autosizeOptions={{
+        includeHeaders: true,
+        includeOutliers: true,
+        outliersFactor: 1.5,
+        expand: true,
+      }}
     />
   );
 }
