@@ -105,9 +105,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>URL:</strong>{' '}
-              {meeting.url ? (
-                <Link href={meeting.url}>{meeting.url}</Link>
-              ) : null}
+              {meeting.url ? <Link href={meeting.url}>Cliquer</Link> : null}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Date de création:</strong>{' '}
