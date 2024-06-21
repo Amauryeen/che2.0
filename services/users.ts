@@ -3,6 +3,7 @@ import prisma from '@/lib/database';
 import { getRoles } from '@/services/roles';
 import { UserStatus } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/auth';
 
 export async function getUsers() {
   return prisma.user.findMany({
@@ -32,12 +33,15 @@ export async function createUser(data: {
   lastName: string;
   roles: string[];
 }) {
+  const session = await auth();
+
   const user = await prisma.user.create({
     data: {
       status: data.status,
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
+      creatorId: session?.user.id,
     },
   });
 

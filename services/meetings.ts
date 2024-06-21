@@ -2,6 +2,7 @@
 import prisma from '@/lib/database';
 import { MeetingPresence } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/auth';
 
 export async function getMeetings() {
   return prisma.meeting.findMany({
@@ -34,6 +35,8 @@ export async function createMeeting(data: {
   attendees: number[];
   documents: number[];
 }) {
+  const session = await auth();
+
   await prisma.meeting.create({
     data: {
       status: 'planned',
@@ -43,6 +46,7 @@ export async function createMeeting(data: {
       description: data.description,
       location: data.location || null,
       url: data.url || null,
+      creatorId: session?.user.id,
       attendees: {
         create: data.attendees.map(id => ({
           userId: id,

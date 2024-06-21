@@ -3,6 +3,7 @@ import prisma from '@/lib/database';
 import { getRoles } from './roles';
 import { VoteValue } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/auth';
 
 export async function getVotes() {
   return prisma.vote.findMany({
@@ -29,12 +30,15 @@ export async function createVote(data: {
   meeting: number;
   anonymous: boolean;
 }) {
+  const session = await auth();
+
   const vote = await prisma.vote.create({
     data: {
       title: data.title,
       description: data.description,
       meetingId: data.meeting,
       anonymous: data.anonymous,
+      creatorId: session?.user.id,
     },
   });
 

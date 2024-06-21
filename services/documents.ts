@@ -3,6 +3,7 @@ import prisma from '@/lib/database';
 import { getRoles } from './roles';
 import { revalidatePath } from 'next/cache';
 import { DocumentStatus } from '@prisma/client';
+import { auth } from '@/auth';
 
 export async function getDocuments() {
   return prisma.document.findMany({
@@ -26,6 +27,8 @@ export async function createDocument(data: {
   roles: string[];
   url: string;
 }) {
+  const session = await auth();
+
   const document = await prisma.document.create({
     data: {
       title: data.title,
@@ -34,6 +37,7 @@ export async function createDocument(data: {
       type: data.type,
       url: data.url,
       status: 'effective',
+      creatorId: session?.user.id,
     },
   });
 
