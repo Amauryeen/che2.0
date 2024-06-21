@@ -101,11 +101,26 @@ export default async function Page({ params }: { params: { id: string } }) {
               }).format(new Date(meeting.endTime))}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              <strong>Lieu:</strong> {meeting.location}
+              <strong>Lieu:</strong>{' '}
+              {meeting.location ? (
+                <Link
+                  href={
+                    'https://www.google.com/maps/search/?api=1&query=' +
+                    meeting.location
+                  }
+                  target={'_blank'}
+                >
+                  {meeting.location}
+                </Link>
+              ) : null}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>URL:</strong>{' '}
-              {meeting.url ? <Link href={meeting.url}>Cliquer</Link> : null}
+              {meeting.url ? (
+                <Link href={meeting.url} target={'_blank'}>
+                  {new URL(meeting.url).hostname}
+                </Link>
+              ) : null}
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Date de création:</strong>{' '}
