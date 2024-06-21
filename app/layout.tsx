@@ -9,7 +9,6 @@ import theme from '@/app/theme';
 import { ThemeProvider } from '@mui/material';
 import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from 'react-hot-toast';
-import RegisterPWA from '@/components/register-pwa';
 
 export const metadata: Metadata = {
   applicationName: 'CHE2.0',
@@ -48,7 +47,6 @@ export default async function RootLayout({
                 email={session.user.email}
                 deployment={process.env.VERCEL_DEPLOYMENT_ID}
               >
-                <RegisterPWA />
                 {children}
               </Navbar>
             ) : (

@@ -1,18 +1,10 @@
-export default async () => {
-  /** @type {import("next").NextConfig} */
+import withPWAInit from "@ducanh2912/next-pwa";
 
-  const nextConfig = {};
+const withPWA = withPWAInit({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+  register: true,
+  reloadOnOnline: true
+});
 
-  if (process.env.NODE_ENV !== 'development') {
-    const withSerwist = (await import("@serwist/next")).default({
-      swSrc: "app/sw.ts",
-      swDest: "public/sw.js",
-      cacheOnNavigation: true,
-      register: false,
-      reloadOnOnline: true,
-    });
-    return withSerwist(nextConfig);
-  }
-
-  return nextConfig;
-};
+export default withPWA({});
