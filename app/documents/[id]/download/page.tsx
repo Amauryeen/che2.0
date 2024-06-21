@@ -15,6 +15,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const session = await auth();
 
   if (
+    document.roles.length == 0 ||
     session?.user.roles.some((role: any) =>
       document.roles.some(
         (authorizedRole: any) => authorizedRole.role.name == role.role.name,

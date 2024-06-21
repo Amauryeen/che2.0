@@ -96,7 +96,7 @@ export default function ResponsiveDrawer(props: Props) {
                 <ListItemIcon>
                   <InstallDesktopIcon />
                 </ListItemIcon>
-                <ListItemText primary="Installer" />
+                <ListItemText primary="Application" />
               </ListItemButton>
             </Link>
           </Box>

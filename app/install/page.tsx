@@ -13,17 +13,19 @@ export default async function Page() {
       </Box>
       Il est possible d&apos;installer CHE2.0 directement sur votre ordinateur
       (et votre téléphone portable). Pour le faire sur ordinateur, munissez-vous
-      d&apos;un navigateur Chromium (Google Chrome, Microsoft Edge, Brave, etc.)
-      et suivez les étapes suivantes :
+      d&apos;un navigateur Chromium (Google Chrome, Microsoft Edge, Brave, etc.
+      Safari ne fonctionne pas!) et suivez les étapes suivantes :
       <ol>
         <li>
-          - Cliquez sur le carré avec un &quot;+&quot; dans votre barre de
+          - Cliquez sur le bouton d&apos;installation dans votre barre de
           recherche
         </li>
         <li>- Cliquez sur &quot;Installer&quot;</li>
       </ol>
       <br />
       Voici un exemple de ce que vous devriez voir :
+      <br />
+      <br />
       <Image
         src={'/install_chromium.png'}
         alt={'Installer sur Chromium'}

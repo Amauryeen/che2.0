@@ -25,17 +25,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       const databaseUser = await getUserByEmail(user.email);
 
-      if (databaseUser && databaseUser.status === 'active') {
-        return true;
-      } else {
-        return false;
-      }
+      if (!databaseUser) {
+        return '/?error=not-found';
+      } else if (databaseUser.status !== 'active') {
+        return '/?error=inactive';
+      } else return true;
     },
     async jwt({ token }) {
       if (!token?.email) throw new Error('No email found in token');
       if (!token.user) {
-        const databaseUser = await getUserByEmail(token.email);
-        token.user = databaseUser;
+        token.user = await getUserByEmail(token.email);
       }
       return token;
     },
@@ -43,5 +42,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user = token.user as any;
       return session;
     },
+  },
+  cookies: {
+    sessionToken: {
+      options: {
+        maxAge: 60 * 60,
+      },
+    },
+  },
+  jwt: {
+    maxAge: 60 * 60,
   },
 });

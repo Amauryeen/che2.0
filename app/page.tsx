@@ -11,12 +11,6 @@ export default async function Page() {
         </Typography>
       </Box>
       Bienvenue sur CHE2.0!
-      <br />
-      <br />
-      <i>
-        La plate-forme est actuellement en développement et les données sont
-        sujettes à être supprimées.
-      </i>
     </Card>
   );
 }
