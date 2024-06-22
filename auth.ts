@@ -53,4 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   jwt: {
     maxAge: 60 * 60,
   },
+  pages: {
+    error: '/',
+  },
 });

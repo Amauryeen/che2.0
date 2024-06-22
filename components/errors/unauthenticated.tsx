@@ -105,7 +105,23 @@ export default function Unauthenticated(props: any) {
               sx={{ mt: 5, p: 2 }}
               disabled={isLoading}
             >
-              {isLoading ? <CircularProgress size={24} /> : 'Se connecter'}
+              {isLoading ? (
+                <CircularProgress size={24} />
+              ) : (
+                <>
+                  <Box component="span" mr={1}>
+                    Se connecter avec
+                  </Box>
+                  <Box component="span">
+                    <Image
+                      src={'/ephec.png'}
+                      alt={'EPHEC Logo'}
+                      width={50}
+                      height={50}
+                    />
+                  </Box>
+                </>
+              )}
             </Button>
           </form>
         </Box>
