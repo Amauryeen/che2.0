@@ -125,7 +125,7 @@ export default function Unauthenticated(props: any) {
           borderRadius={4}
           p={2}
           sx={{
-            backdropFilter: 'blur(10px)',
+            backdropFilter: 'blur(5px)',
           }}
         >
           {error && (
