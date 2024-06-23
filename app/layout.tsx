@@ -44,7 +44,7 @@ export default async function RootLayout({
           <AppRouterCacheProvider>
             {session?.user?.email ? (
               <Navbar
-                name={session.user.lastName + ' ' + session.user.firstName}
+                name={session.user.firstName + ' ' + session.user.lastName}
                 email={session.user.email}
                 deployment={process.env.VERCEL_DEPLOYMENT_ID}
               >
