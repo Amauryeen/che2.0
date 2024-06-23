@@ -168,8 +168,8 @@ export default function ResponsiveDrawer(props: Props) {
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ padding: '1rem', textAlign: 'center' }}>
         <Typography variant="body2" noWrap component="div">
-          <Link href="https://github.com/Amauryeen">
-            © 2024 Amaury GROTARD
+          <Link href="https://github.com/Amauryeen" target={'_blank'}>
+            © 2024 Amaury Grotard
           </Link>
         </Typography>
         <Typography variant="body2" noWrap component="div" fontSize={9}>
