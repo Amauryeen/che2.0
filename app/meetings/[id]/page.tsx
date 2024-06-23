@@ -277,17 +277,21 @@ export default async function Page({ params }: { params: { id: string } }) {
                           (attendee: any) => attendee.presence === 'present',
                         )
                         .map((attendee: any) => (
-                          <Chip
+                          <Link
+                            href={`/meetings/${params.id}/presence/${attendee.user.id}`}
                             key={attendee.id}
-                            label={
-                              attendee.user.firstName +
-                              ' ' +
-                              attendee.user.lastName
-                            }
-                            color="success"
-                            variant="outlined"
-                            sx={{ m: '3px' }}
-                          />
+                          >
+                            <Chip
+                              label={
+                                attendee.user.firstName +
+                                ' ' +
+                                attendee.user.lastName
+                              }
+                              color="success"
+                              variant="outlined"
+                              sx={{ m: '3px' }}
+                            />
+                          </Link>
                         ))}
                 </Card>
               </Grid>
@@ -317,17 +321,21 @@ export default async function Page({ params }: { params: { id: string } }) {
                           (attendee: any) => attendee.presence === 'unknown',
                         )
                         .map((attendee: any) => (
-                          <Chip
+                          <Link
+                            href={`/meetings/${params.id}/presence/${attendee.user.id}`}
                             key={attendee.id}
-                            label={
-                              attendee.user.firstName +
-                              ' ' +
-                              attendee.user.lastName
-                            }
-                            color="primary"
-                            variant="outlined"
-                            sx={{ m: '3px' }}
-                          />
+                          >
+                            <Chip
+                              label={
+                                attendee.user.firstName +
+                                ' ' +
+                                attendee.user.lastName
+                              }
+                              color="primary"
+                              variant="outlined"
+                              sx={{ m: '3px' }}
+                            />
+                          </Link>
                         ))}
                 </Card>
               </Grid>
@@ -357,22 +365,26 @@ export default async function Page({ params }: { params: { id: string } }) {
                           (attendee: any) => attendee.presence === 'excused',
                         )
                         .map((attendee: any) => (
-                          <Chip
+                          <Link
+                            href={`/meetings/${params.id}/presence/${attendee.user.id}`}
                             key={attendee.id}
-                            label={
-                              attendee.user.firstName +
-                              ' ' +
-                              attendee.user.lastName +
-                              ' (procuration à ' +
-                              attendee.procurer.firstName +
-                              ' ' +
-                              attendee.procurer.lastName +
-                              ')'
-                            }
-                            color="error"
-                            variant="outlined"
-                            sx={{ m: '3px' }}
-                          />
+                          >
+                            <Chip
+                              label={
+                                attendee.user.firstName +
+                                ' ' +
+                                attendee.user.lastName +
+                                ' (' +
+                                attendee.procurer.firstName +
+                                ' ' +
+                                attendee.procurer.lastName +
+                                ')'
+                              }
+                              color="error"
+                              variant="outlined"
+                              sx={{ m: '3px' }}
+                            />
+                          </Link>
                         ))}
                 </Card>
               </Grid>
