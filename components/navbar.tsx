@@ -7,6 +7,8 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -24,8 +26,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import Image from 'next/image';
-import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { CircularProgress } from '@mui/material';
 
 const drawerWidth = 230;
 
@@ -181,6 +183,8 @@ export default function ResponsiveDrawer(props: Props) {
 
   const router = useRouter();
 
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+
   return (
     <Box>
       <CssBaseline />
@@ -206,11 +210,39 @@ export default function ResponsiveDrawer(props: Props) {
             edge="start"
             sx={{ mr: 2 }}
             onClick={() => {
-              router.refresh();
-              toast.success('La page a été rechargée.');
+              router.back();
             }}
           >
-            <RefreshIcon />
+            <ArrowBackIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            edge="start"
+            sx={{ mr: 2 }}
+            onClick={() => {
+              router.forward();
+            }}
+          >
+            <ArrowForwardIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            edge="start"
+            sx={{ mr: 2 }}
+            onClick={() => {
+              setIsRefreshing(true);
+              router.refresh();
+              setTimeout(() => {
+                setIsRefreshing(false);
+              }, 1000);
+            }}
+            disabled={isRefreshing}
+          >
+            {isRefreshing ? (
+              <CircularProgress color="inherit" size={24} />
+            ) : (
+              <RefreshIcon />
+            )}
           </IconButton>
           <Box sx={{ flexGrow: 1, textAlign: 'right' }}>
             <Typography variant="body2" noWrap component="div">
