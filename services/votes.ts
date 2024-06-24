@@ -90,6 +90,17 @@ export async function castVote(
     where: { id: voteId },
   });
 
+  const voteUser = await prisma.voteUser.findFirst({
+    where: {
+      voteId,
+      userId,
+    },
+  });
+
+  if (voteUser) {
+    throw new Error('You have already voted on this vote');
+  }
+
   await prisma.voteUser.create({
     data: {
       voteId,
