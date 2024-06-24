@@ -32,8 +32,6 @@ export default function Table(props: { users: User[] }) {
     {
       field: 'status',
       headerName: 'Statut',
-      minWidth: 150,
-      flex: 1,
       renderCell: (params: GridRenderCellParams) =>
         params.row.status === 'active' ? (
           <Chip
