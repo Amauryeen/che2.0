@@ -6,7 +6,7 @@ import { auth } from '@/auth';
 
 export async function getMeetings() {
   return prisma.meeting.findMany({
-    orderBy: [{ status: 'asc' }, { createdAt: 'asc' }],
+    orderBy: [{ status: 'asc' }, { startTime: 'desc' }],
   });
 }
 

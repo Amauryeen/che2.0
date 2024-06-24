@@ -68,7 +68,8 @@ model User {
   createdAt        DateTime          @default(now())
   creatorId        Int?
   creator          User?             @relation(name: "UserCreator", fields: [creatorId], references: [id])
-  updatedAt        DateTime          @default(now()) @updatedAt
+  updatedAt        DateTime          @default(now())
+  lastLogin        DateTime?
 }
 
 model Role {
@@ -78,7 +79,7 @@ model Role {
   documents DocumentRole[]
   votes     VoteRole[]
   createdAt DateTime       @default(now())
-  updatedAt DateTime       @default(now()) @updatedAt
+  updatedAt DateTime       @default(now())
 }
 
 model UserRole {
@@ -88,7 +89,7 @@ model UserRole {
   roleId    Int
   role      Role     @relation(fields: [roleId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt DateTime @default(now())
 }
 
 model Document {
@@ -104,7 +105,7 @@ model Document {
   createdAt   DateTime          @default(now())
   creatorId   Int?
   creator     User?             @relation(fields: [creatorId], references: [id])
-  updatedAt   DateTime          @default(now()) @updatedAt
+  updatedAt   DateTime          @default(now())
 }
 
 model DocumentRole {
@@ -114,7 +115,7 @@ model DocumentRole {
   roleId     Int
   role       Role     @relation(fields: [roleId], references: [id])
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  updatedAt  DateTime @default(now())
 }
 
 model Meeting {
@@ -132,7 +133,7 @@ model Meeting {
   createdAt   DateTime          @default(now())
   creatorId   Int?
   creator     User?             @relation(fields: [creatorId], references: [id])
-  updatedAt   DateTime          @default(now()) @updatedAt
+  updatedAt   DateTime          @default(now())
 }
 
 model MeetingAttendee {
@@ -145,7 +146,7 @@ model MeetingAttendee {
   procurerId Int?
   procurer   User?           @relation(name: "MeetingAttendeeProcurer", fields: [procurerId], references: [id])
   createdAt  DateTime        @default(now())
-  updatedAt  DateTime        @default(now()) @updatedAt
+  updatedAt  DateTime        @default(now())
 }
 
 model MeetingDocument {
@@ -155,7 +156,7 @@ model MeetingDocument {
   documentId Int
   document   Document @relation(fields: [documentId], references: [id])
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  updatedAt  DateTime @default(now())
 }
 
 model Vote {
@@ -174,7 +175,7 @@ model Vote {
   createdAt    DateTime   @default(now())
   creatorId    Int?
   creator      User?      @relation(fields: [creatorId], references: [id])
-  updatedAt    DateTime   @default(now()) @updatedAt
+  updatedAt    DateTime   @default(now())
 }
 
 model VoteRole {
@@ -184,7 +185,7 @@ model VoteRole {
   roleId    Int
   role      Role     @relation(fields: [roleId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt DateTime @default(now())
 }
 
 model VoteUser {
@@ -195,5 +196,5 @@ model VoteUser {
   user      User       @relation(fields: [userId], references: [id])
   value     VoteValue?
   createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now()) @updatedAt
+  updatedAt DateTime   @default(now())
 }

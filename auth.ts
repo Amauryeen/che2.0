@@ -1,5 +1,5 @@
 import AzureAD from 'next-auth/providers/azure-ad';
-import { getUserByEmail } from '@/services/users';
+import { getUserByEmail, setUserLastLogin } from '@/services/users';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import { Role, User, UserRole } from '@prisma/client';
 
@@ -29,7 +29,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return '/?error=not-found';
       } else if (databaseUser.status !== 'active') {
         return '/?error=inactive';
-      } else return true;
+      } else {
+        setUserLastLogin(databaseUser.id);
+        return true;
+      }
     },
     async jwt({ token }) {
       if (!token?.email) throw new Error('No email found in token');

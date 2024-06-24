@@ -22,7 +22,6 @@ import Link from 'next/link';
 export default function Unauthenticated(props: any) {
   const [isLoading, setIsLoading] = useState(false);
   const error = useSearchParams().get('error');
-  const success = useSearchParams().get('success');
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -136,15 +135,6 @@ export default function Unauthenticated(props: any) {
                   : error === 'inactive'
                     ? "Votre compte est inactif. Veuillez contacter un/une Gestionnaire si vous pensez qu'il s'agit d'une erreur."
                     : 'Une erreur inconnue est survenue. Veuillez contacter un/une Gestionnaire.'}
-              </Typography>
-            </Box>
-          )}
-          {success && (
-            <Box border={2} borderColor="success.main" borderRadius={5} p={2}>
-              <Typography align="center">
-                {success === 'sign-out'
-                  ? 'Vous avez été déconnecté avec succès.'
-                  : 'Action effectuée avec succès.'}
               </Typography>
             </Box>
           )}

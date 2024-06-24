@@ -28,6 +28,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { CircularProgress } from '@mui/material';
+import { signOut } from '@/services/auth';
+import toast from 'react-hot-toast';
+import { usePathname } from 'next/navigation';
 
 const drawerWidth = 230;
 
@@ -56,6 +59,16 @@ export default function ResponsiveDrawer(props: Props) {
       setMobileOpen(!mobileOpen);
     }
   };
+
+  const pathname = usePathname();
+
+  function logOut() {
+    toast.promise(signOut(pathname), {
+      loading: 'Déconnexion en cours...',
+      success: 'Vous avez été déconnecté avec succès.',
+      error: 'La déconnexion a échoué. Êtes-vous bien connecté à Internet?',
+    });
+  }
 
   const drawer = (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -155,14 +168,12 @@ export default function ResponsiveDrawer(props: Props) {
         <ListItem disablePadding>
           <Box sx={{ width: '100%' }}>
             <Divider />
-            <Link href="/signout">
-              <ListItemButton>
-                <ListItemIcon>
-                  <ExitToAppIcon />
-                </ListItemIcon>
-                <ListItemText primary="Déconnexion" />
-              </ListItemButton>
-            </Link>
+            <ListItemButton onClick={logOut}>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText primary="Déconnexion" />
+            </ListItemButton>
             <Divider />
           </Box>
         </ListItem>

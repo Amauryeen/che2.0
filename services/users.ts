@@ -8,7 +8,10 @@ import { auth } from '@/auth';
 export async function getUsers() {
   return prisma.user.findMany({
     include: { roles: { include: { role: true } } },
-    orderBy: [{ status: 'asc' }, { createdAt: 'desc' }],
+    orderBy: [
+      { status: 'asc' },
+      { lastLogin: { sort: 'desc', nulls: 'last' } },
+    ],
   });
 }
 
@@ -90,4 +93,11 @@ export async function updateUser(
   });
 
   revalidatePath('/');
+}
+
+export async function setUserLastLogin(id: number) {
+  await prisma.user.update({
+    where: { id },
+    data: { lastLogin: new Date() },
+  });
 }

@@ -55,6 +55,16 @@ export default async function Page({ params }: { params: { id: string } }) {
               <strong>E-mail:</strong> {user.email}
             </Typography>
             <Typography variant="body1" gutterBottom>
+              <strong>Dernière connexion:</strong>{' '}
+              {user.lastLogin
+                ? new Intl.DateTimeFormat('fr-FR', {
+                    dateStyle: 'full',
+                    timeStyle: 'short',
+                    timeZone: 'Europe/Brussels',
+                  }).format(new Date(user.lastLogin))
+                : 'Jamais'}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
               <strong>Date de création:</strong>{' '}
               {new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'full',

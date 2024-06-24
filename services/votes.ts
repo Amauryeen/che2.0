@@ -7,7 +7,7 @@ import { auth } from '@/auth';
 
 export async function getVotes() {
   return prisma.vote.findMany({
-    orderBy: [{ status: 'asc' }, { createdAt: 'asc' }],
+    orderBy: [{ status: 'asc' }, { createdAt: 'desc' }],
     include: { roles: { include: { role: true } }, meeting: true },
   });
 }

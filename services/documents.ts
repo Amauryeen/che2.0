@@ -7,7 +7,7 @@ import { auth } from '@/auth';
 
 export async function getDocuments() {
   return prisma.document.findMany({
-    orderBy: [{ status: 'asc' }, { createdAt: 'asc' }],
+    orderBy: [{ status: 'asc' }, { createdAt: 'desc' }],
     include: { roles: { include: { role: true } } },
   });
 }
