@@ -6,6 +6,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install modules
-        run: npm i
+        run: pnpm install
       - name: Run ESLint
-        run: npx eslint .
+        run: pnpm exec next lint
