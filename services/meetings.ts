@@ -113,15 +113,22 @@ export async function setMeetingPresence(
     procurer: number | null;
   },
 ) {
+  let meetingAttendee = await prisma.meetingAttendee.findUnique({
+    where: { id },
+  });
+
   if (data.presence === 'excused' && data.procurer) {
     const user = await prisma.meetingAttendee.findFirst({
-      where: { procurerId: data.procurer },
+      where: {
+        procurerId: data.procurer,
+        meetingId: meetingAttendee?.meetingId,
+      },
     });
 
     if (user) throw Error();
   }
 
-  const meetingAttendee = await prisma.meetingAttendee.update({
+  meetingAttendee = await prisma.meetingAttendee.update({
     where: { id },
     data: {
       presence: data.presence,
